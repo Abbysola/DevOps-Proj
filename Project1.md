@@ -15,7 +15,11 @@
 
 ##### This created a Linux server in the cloud #####
 
+---
+
 ### INSTALLING APACHE AND UPDATING THE FIREWALL ###
+
+---
 
 ##### Installing Apache using Ubuntu's package manager 'apt' #####
 
@@ -43,8 +47,29 @@ or
  ```
 ##### From the Internet. Opening a web browser and accessing the following url: #####
 
-http://<Public-IP-Address>:80
+```http://<Public-IP-Address>:80```
 
-*The Public IP address can be checked from the AWS console or by typing the following command in the terminal:*
+*The Public IP address can be checked from the AWS console or by typing the following command on the terminal:*
 
-curl -s http://169.254.169.254/latest/meta-data/public-ipv4
+```curl -s http://169.254.169.254/latest/meta-data/public-ipv4```
+
+---
+
+### INSTALLING MYSQL ###
+
+---
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
