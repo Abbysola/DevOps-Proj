@@ -1,19 +1,23 @@
-## LAMP (Linux, Apache, MySQL, PHP or Python, or Perl) STACK IMPLEMENTATION ##
+## LAMP (Linux, Apache, MySQL, PHP or Python, or Perl) STACK IMPLEMENTATION ## 
+
 ---
-##### Set up AWS account and connecting to my EC2 instance from my terminal. Downloaded the PEM file and navigated to the folder it has been saved. #####
+
+*Kindly note that images will be added later. The project was first done without making screenshots so I couldnt make screenshots when I eventually started documenting because I couldn't get those images again.. Thanks
+
+##### Setting up AWS account and connecting to my EC2 instance from my terminal. Downloading the PEM file and navigated to the folder it has been saved. #####
 *The anchor tags < > represent specific values relating to different situations*
 
 ````cd <PEM-file-location>````
 
-##### Changed permissions of the private key file: #####
+##### Changing permissions of the private key file: #####
 
 ```sudo chmod 0400 <private-key-name>.pem```
 
-##### Connected to the instance: #####
+##### Connecting to the instance: #####
 
 ```ssh -i <private-key-name>.pem ubuntu@<Public-IP-address>```
 
-##### This created a Linux server in the cloud #####
+##### This creates a Linux server in the cloud #####
 
 ---
 
@@ -21,9 +25,9 @@
 
 ---
 
-##### Installed Apache using Ubuntu's package manager 'apt' #####
+##### Installing Apache using Ubuntu's package manager 'apt' #####
 
-##### Updated a list of packages and ran apache2 package installation #####
+##### Updating a list of packages and ran apache2 package installation #####
 
 ```
 sudo apt update
@@ -36,7 +40,7 @@ sudo apt install apache2
 
 *This launches a webserver in the clouds. The server is running and we can access it locally and from the Internet (Source 0.0.0.0/0 means ‘from any IP address’).*
 
-#### Accessed the Apache HTTP server. This was done from the terminal and also checked if it responds to requests from the Internet. ####
+#### Accessing the Apache HTTP server. This was done from the terminal and also checked if it responds to requests from the Internet. ####
 
 ##### From the terminal: #####
 
@@ -45,7 +49,7 @@ curl http://localhost:80
 or
  curl http://127.0.0.1:80
  ```
-##### From the Internet. Opened a web browser and accessing the following url: #####
+##### From the Internet. Opening a web browser and accessing the following url: #####
 
 ```http://<Public-IP-Address>:80```
 
@@ -59,7 +63,7 @@ or
 
 ---
 
-##### Installed a Database Management System (DBMS) which is MySQL to store and manage data. This was done using 'apt' #####
+##### Installing a Database Management System (DBMS) which is MySQL to store and manage data. This was done using 'apt' #####
 
 ```sudo apt install mysql-server```
 
@@ -181,6 +185,48 @@ Zend Engine v4.1.2, Copyright (c) Zend Technologies
 
 ```http://<Public-DNS-Name>:80```
 
+---
+
+### ENABLE PHP ON THE WEBSITE
+
+---
+
+
+##### To stop the index.html file from overriding the index.php file, we run the command below and edit the /etc/apache2/mods-enabled/dir.conf file, Also, the order in which the index.php file is listed withing the DirectoryIndex directive is changed:
+
+```sudo vim /etc/apache2/mods-enabled/dir.conf```
+
+```
+<IfModule mod_dir.c>
+        #Change this:
+        #DirectoryIndex index.html index.cgi index.pl index.php index.xhtml index.htm
+        #To this:
+        DirectoryIndex index.php index.html index.cgi index.pl index.xhtml index.htm
+</IfModule>
+```
+
+##### Reloading the Apache so the changes can take effect #####
+
+```sudo systemctl reload apache2```
+
+##### Creating a PHP script to test that PHP is correctly installed and configured on your server.
+
+##### Now that there is a custom location to host your website’s files and folders, a PHP test script is created to confirm that Apache is able to handle and process requests for PHP files.
+
+##### Creating a new file named index.php inside the custom web root folder:
+
+```vim /var/www/projectlamp/index.php```
+
+##### This opens a blank file. Adding the following text, which is valid PHP code, inside the file:
+
+```
+<?php
+phpinfo();
+```
+
+*After checking the relevant information about the PHP server created through that page, the file will be removed as it contains sensitive information about the PHP environment.
+
+```sudo rm /var/www/projectlamp/index.php```
 
 
 
@@ -192,6 +238,12 @@ Zend Engine v4.1.2, Copyright (c) Zend Technologies
 
 
 
+
+
+
+
+
+ 
 
 
 
