@@ -141,14 +141,45 @@ Zend Engine v4.1.2, Copyright (c) Zend Technologies
 ```
 *To save and close the file, simply follow the steps below:
 
-*-Hit the esc button on the keyboard
--Type :
--Type wq. w for write and q for quit
--Hit ENTER to save the file
+*-Hit the esc button on the keyboard\
+-Type :\
+-Type wq. w for write and q for quit\
+-Hit ENTER to save the file\
 
 ##### 'ls' command shows the new file in the sites-available directory
 ```sudo ls /etc/apache2/sites-available```
 
+##### Using a2ensite command to enable the new virtual host:
+
+```sudo a2ensite projectlamp```
+
+##### Disabling the default website that comes installed with Apache. Disabling Apache’s default website use a2dissite command:
+
+```sudo a2dissite 000-default```
+
+##### To make sure the configuration does not contain syntax errors:
+
+```sudo apache2ctl configtest```
+
+##### Reloading so that the changes can take effect
+
+```sudo systemctl reload apache2```
+
+*Now the website is active*
+
+##### Creating an index.html file in root /var/www/projectlamp which s still empty so that the virtual host works as expected:
+
+```sudo echo 'Hello LAMP from hostname' $(curl -s http://169.254.169.254/latest/meta-data/public-hostname) 'with public IP' $(curl -s http://169.254.169.254/latest/meta-data/public-ipv4) > /var/www/projectlamp/index.html```
+
+##### Opening the website using IP address
+
+```http://<Public-IP-Address>:80```
+
+*The text from the ‘echo’ command written to the index.html file shoss here and this means the Apache virtual host is working as expected. The server’s public hostname (DNS name) and public IP address is also seen.
+
+##### The website can also be accessed in t the owser by public DNS name (port is optional)
+
+```http://<Public-DNS-Name>:80```
 
 
 
