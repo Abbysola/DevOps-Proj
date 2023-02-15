@@ -1,55 +1,56 @@
-## LAMP (Linux, Apache, MySQL, PHP or Python, or Perl) STACK IMPLEMENTATION ## 
+## LAMP (Linux, Apache, MySQL, PHP or Python, or Perl) STACK IMPLEMENTATION
 
 ---
 
-*Kindly note that images will be added later. The project was first done without making screenshots so I couldnt make screenshots when I eventually started documenting because I couldn't get those images again.. Thanks
+*Kindly note that images will be added later. The project was first done without making screenshots so I couldnt make screenshots when I eventually started documenting because I could not get those images again. Thanks. *
 
-##### Setting up AWS account and connecting to my EC2 instance from my terminal. Downloading the PEM file and navigated to the folder it has been saved. #####
+##### Setting up AWS account and connecting to my EC2 instance from my terminal. Downloading the PEM file and navigated to the folder it has been saved.
+
 *The anchor tags < > represent specific values relating to different situations*
 
 ````cd <PEM-file-location>````
 
-##### Changing permissions of the private key file: #####
+##### Changing permissions of the private key file:
 
 ```sudo chmod 0400 <private-key-name>.pem```
 
-##### Connecting to the instance: #####
+##### Connecting to the instance:
 
 ```ssh -i <private-key-name>.pem ubuntu@<Public-IP-address>```
 
-##### This creates a Linux server in the cloud #####
+##### This creates a Linux server in the cloud
 
 ---
 
-### INSTALLING APACHE AND UPDATING THE FIREWALL ###
+### INSTALLING APACHE AND UPDATING THE FIREWALL
 
 ---
 
-##### Installing Apache using Ubuntu's package manager 'apt' #####
+##### Installing Apache using Ubuntu's package manager 'apt'
 
-##### Updating a list of packages and ran apache2 package installation #####
+##### Updating a list of packages and ran apache2 package installation
 
 ```
 sudo apt update
 
 sudo apt install apache2
 ```
-##### To verify that apache2 is running as a service in the OS #####
+##### To verify that apache2 is running as a service in the OS
 
 ```sudo systemctl status apache2```
 
 *This launches a webserver in the clouds. The server is running and we can access it locally and from the Internet (Source 0.0.0.0/0 means ‘from any IP address’).*
 
-#### Accessing the Apache HTTP server. This was done from the terminal and also checked if it responds to requests from the Internet. ####
+#### Accessing the Apache HTTP server. This was done from the terminal and also checked if it responds to requests from the Internet.
 
-##### From the terminal: #####
+##### From the terminal:
 
 ```
 curl http://localhost:80
 or
  curl http://127.0.0.1:80
  ```
-##### From the Internet. Opening a web browser and accessing the following url: #####
+##### From the Internet. Opening a web browser and accessing the following url:
 
 ```http://<Public-IP-Address>:80```
 
@@ -59,11 +60,11 @@ or
 
 ---
 
-### INSTALLING MYSQL ###
+### INSTALLING MYSQL
 
 ---
 
-##### Installing a Database Management System (DBMS) which is MySQL to store and manage data. This was done using 'apt' #####
+##### Installing a Database Management System (DBMS) which is MySQL to store and manage data. This was done using 'apt'
 
 ```sudo apt install mysql-server```
 
@@ -112,7 +113,7 @@ Zend Engine v4.1.2, Copyright (c) Zend Technologies
 
 ---
 
-### CREATING A VIRTUAL HOST FOR A WEBSITE USING APACHE ###
+### CREATING A VIRTUAL HOST FOR A WEBSITE USING APACHE
 
 ---
 
@@ -143,12 +144,12 @@ Zend Engine v4.1.2, Copyright (c) Zend Technologies
     CustomLog ${APACHE_LOG_DIR}/access.log combined
 </VirtualHost>
 ```
-*To save and close the file, simply follow the steps below:
+*To save and close the file, simply follow the steps below:*
 
-*-Hit the esc button on the keyboard\
--Type :\
--Type wq. w for write and q for quit\
--Hit ENTER to save the file\
+*-Hit the esc button on the keyboard*\
+*-Type :*\
+*-Type wq. w for write and q for quit*\
+*-Hit ENTER to save the file*
 
 ##### 'ls' command shows the new file in the sites-available directory
 ```sudo ls /etc/apache2/sites-available```
@@ -179,7 +180,7 @@ Zend Engine v4.1.2, Copyright (c) Zend Technologies
 
 ```http://<Public-IP-Address>:80```
 
-*The text from the ‘echo’ command written to the index.html file shoss here and this means the Apache virtual host is working as expected. The server’s public hostname (DNS name) and public IP address is also seen.
+*The text from the ‘echo’ command written to the index.html file shoss here and this means the Apache virtual host is working as expected. The server’s public hostname (DNS name) and public IP address is also seen.*
 
 ##### The website can also be accessed in t the owser by public DNS name (port is optional)
 
@@ -205,7 +206,7 @@ Zend Engine v4.1.2, Copyright (c) Zend Technologies
 </IfModule>
 ```
 
-##### Reloading the Apache so the changes can take effect #####
+##### Reloading the Apache so the changes can take effect
 
 ```sudo systemctl reload apache2```
 
@@ -224,7 +225,7 @@ Zend Engine v4.1.2, Copyright (c) Zend Technologies
 phpinfo();
 ```
 
-*After checking the relevant information about the PHP server created through that page, the file will be removed as it contains sensitive information about the PHP environment.
+*After checking the relevant information about the PHP server created through that page, the file will be removed as it contains sensitive information about the PHP environment.*
 
 ```sudo rm /var/www/projectlamp/index.php```
 
