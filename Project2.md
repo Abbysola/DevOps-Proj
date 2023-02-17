@@ -22,9 +22,9 @@
 
 ```sudo systemctl status nginx```
 
-### In order to reieve traffic from the Web Server, TCP port 80 which is default port that web brousers use to access web pages in the Internet will be opened. TCP port 22 is open by default on the EC2 machine and to access it via SSH, a rule will be added to the EC2 configuration to open inbound connection through port 80.
+#### In order to reieve traffic from the Web Server, TCP port 80 which is default port that web brousers use to access web pages in the Internet will be opened. TCP port 22 is open by default on the EC2 machine and to access it via SSH, a rule will be added to the EC2 configuration to open inbound connection through port 80.
 
-### Accessing the server locally:
+#### Accessing the server locally:
 
 ```
 curl http://localhost:80
@@ -33,6 +33,13 @@ curl http://127.0.0.1:80
 ```
 
 *These two commands above produce the same result – they use ‘curl’ command to request our Nginx on port 80. The difference is that: In the first case, the server is accessed via DNS name and in the second one – by IP address (in this case IP address 127.0.0.1 corresponds to DNS name ‘localhost’ and the process of converting a DNS name to IP address is called "resolution").*
+
+#### Checking how the Nginx server responds to requests from the Internet:
+
+*Try the command below on any web browser*
+
+```http://<Public-IP-Address>:80```
+
 
 
 
