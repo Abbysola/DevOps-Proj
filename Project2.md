@@ -36,9 +36,27 @@ curl http://127.0.0.1:80
 
 #### Checking how the Nginx server responds to requests from the Internet:
 
-*Try the command below on any web browser*
+*Try the command below on any web browser. The URL also works without specifying port number since all web browsers use port 80 by default.*
 
 ```http://<Public-IP-Address>:80```
+
+#### Another way to retrieve your Public IP address, other than to check it in AWS Web console, is to use following command:
+
+```curl -s http://169.254.169.254/latest/meta-data/public-ipv4```
+
+*The image above shows that the web server is now correctly installed and accessible through your firewall. It is the same content that was gotten by ‘curl’ command, but represented in nice HTML formatting by on the web browser.*
+
+---
+
+### INSTALLING MYSQL
+
+---
+
+#### Installing MySQL, a Database Management System used within PHP environments. 'apt' will be used to acqire and install this software.
+
+
+
+
 
 
 
