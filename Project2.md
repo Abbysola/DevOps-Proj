@@ -44,7 +44,7 @@ curl http://127.0.0.1:80
 
 ```curl -s http://169.254.169.254/latest/meta-data/public-ipv4```
 
-![NGINX Web Server Installation] (https://github.com/Abbysola/DevOps-Proj/blob/0a1db7cfcdf46e8ddae8d4128fa0d734c585ce37/Images/Screenshot%202023-02-22%20at%2011.48.17.png)
+![NGINX Web Server Installation](https://github.com/Abbysola/DevOps-Proj/blob/0a1db7cfcdf46e8ddae8d4128fa0d734c585ce37/Images/Screenshot%202023-02-22%20at%2011.48.17.png)
 
 *The image above shows that the web server is now correctly installed and accessible through your firewall. It is the same content that was gotten by ‘curl’ command, but represented in nice HTML formatting by on the web browser.*
 
