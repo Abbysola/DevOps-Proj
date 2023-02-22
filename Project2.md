@@ -44,6 +44,8 @@ curl http://127.0.0.1:80
 
 ```curl -s http://169.254.169.254/latest/meta-data/public-ipv4```
 
+![NGINX] (
+
 *The image above shows that the web server is now correctly installed and accessible through your firewall. It is the same content that was gotten by ‘curl’ command, but represented in nice HTML formatting by on the web browser.*
 
 ---
@@ -82,6 +84,29 @@ Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
 mysql> ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'PassWord.1';
 Query OK, 0 rows affected (0.07 sec)
 ```
+#### Running a security script that comes pre-installed with MySQL. This script will remove some insecure default settings and lock down access to the database system. Before running the script, a password will be set for the root user, using mysql_native_password as default authentication method. This user’s password is defined as PassWord.1.
+
+```ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'PassWord.1';```
+
+#### Exiting the MySQL shell:
+
+```mysql> exit```
+
+#### The interactive script is started by running:
+
+```sudo mysql_secure_installation```
+
+#### Here, VALIDATE PASSWORD PLUGIN is configured. Answering Y for yes, or anything else to continue. Level 1 was ented for the level of password validation to avoid errors.
+
+#### Testing that we can login to MySQL console with the password used after changing the root user password:
+
+```sudo mysql -p```
+
+### Exiting the MySQL console:
+
+```mysql> exit```
+
+
 
 
 
