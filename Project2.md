@@ -183,6 +183,29 @@ server {
 
 
 
+#### Output
+
+SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| example_database   |
+| information_schema |
+| performance_schema |
++--------------------+
+3 rows in set (0.01 sec)
+
+#### Test Table
+
+mysql> CREATE TABLE example_database.todo_list (
+    -> item_id INT AUTO_INCREMENT,
+    -> content VARCHAR(255),
+    -> PRIMARY KEY(item_id)
+    -> );
+
+
+
+
 
 *Trouble shooting*
 #### Migrated to the folder/directory where the new configuration file was opened
