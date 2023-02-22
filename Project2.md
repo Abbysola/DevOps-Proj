@@ -106,6 +106,140 @@ Query OK, 0 rows affected (0.07 sec)
 
 ```mysql> exit```
 
+---
+
+### INSTALLING PHP
+
+---
+
+#### Here, PHP is installed to process code and generate dynamic content for the web server.
+
+*While Apache embeds the PHP interpreter in each request, Nginx requires an external program to handle PHP processing and act as a bridge between the PHP interpreter itself and the web server. This allows for a better overall performance in most PHP-based websites, but it requires additional configuration. *
+
+#### Installing php-fpm, which stands for “PHP fastCGI process manager”. Further, Nginx is told to pass PHP requests to this software for processing. Additionally, php-mysql is installed, a PHP module that allows PHP to communicate with MySQL-based databases. Core PHP packages will automatically be installed as dependencies.*
+
+#### Installing these 2 packages simultaneously:
+
+```sudo apt install php-fpm php-mysql```
+
+*When prompted, type Y and press ENTER to confirm installation.*
+
+#### PHP components have now been installed.
+
+---
+
+### CONFIGURING NGINX TO USE PHP SERVER
+
+---
+
+*When using the Nginx web server, we can create server blocks (similar to virtual hosts in Apache) to encapsulate configuration details and host more than one domain on a single server. In this guide, we will use projectLEMP as an example domain name.*
+
+*On Ubuntu 20.04, Nginx has one server block enabled by default and is configured to serve documents out of a directory at /var/www/html. While this works well for a single site, it can become difficult to manage if you are hosting multiple sites. Instead of modifying /var/www/html, we’ll create a directory structure within /var/www for the projectLEMP website, leaving /var/www/html in place as the default directory to be served if a client request does not match any other site.*
+
+#### Creating the root web directory for projectLEMP
+
+```sudo mkdir /var/www/projectLEMP```
+
+#### Assigning ownership of the directory with the $USER environment variable, which will reference the current system user
+
+```sudo chown -R $USER:$USER /var/www/projectLEMP```
+
+#### Opening a new configuration file in Nginx’s sites-available directory. Here, we’ll use nano:
+
+```sudo nano /etc/nginx/sites-available/projectLEMP```
+
+#### This will create a new blank file. Pasting the following bare-bones configuration:
+
+```
+#/etc/nginx/sites-available/projectLEMP
+
+server {
+    listen 80;
+    server_name projectLEMP www.projectLEMP;
+    root /var/www/projectLEMP;
+
+    index index.html index.htm index.php;
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+
+    location ~ \.php$ {
+        include snippets/fastcgi-php.conf;
+        fastcgi_pass unix:/var/run/php/php8.1-fpm.sock;
+     }
+
+    location ~ /\.ht {
+        deny all;
+    }
+
+}
+```
+#### Save and close the file. If you’re using nano, you can do so by typing CTRL+X and then y and ENTER to confirm.
+
+### Activating the configuration by linking to the config file from Nginx’s sites-enabled directory:
+
+```sudo ln -s /etc/nginx/sites-available/projectLEMP /etc/nginx/sites-enabled/```
+
+
+
+
+*Trouble shooting*
+#### Migrated to the folder/directory where the new configuration file was opened
+```cd /etc/nginx/sites-available```
+
+#### To check content
+```ls```
+
+#### To check the content of projectLEMP
+```cat projectLEMP```
+
+#### check PHP verion so it corresponds well on both ends and change if needed.
+```php -v```
+
+#### To edit content. Here, the php version was edited and server name was removed
+```sudo vi projectLEMP```
+
+```
+server {
+    listen 80;
+    server_name _;
+    root /var/www/projectLEMP;
+
+    index index.html index.htm index.php;
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+
+    location ~ \.php$ {
+        include snippets/fastcgi-php.conf;
+        fastcgi_pass unix:/var/run/php/php7.4-fpm.sock;
+     }
+
+    location ~ /\.ht {
+        deny all;
+    }
+
+}
+```
+
+*Since we are using sudo, you close with*
+1. esc
+2. :wq
+3. press ENTER
+
+#### Restart nginx with:
+```sudo systemctl restart nginx```
+
+#### re-run the URL to check
+```http://54.236.48.197/info.php```
+
+
+
+
+
+
 
 
 
