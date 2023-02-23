@@ -128,7 +128,7 @@ Query OK, 0 rows affected (0.07 sec)
 
 ---
 
-### CONFIGURING NGINX TO USE PHP SERVER
+### CONFIGURING NGINX TO USE PHP PROCESSOR
 
 ---
 
@@ -137,19 +137,15 @@ Query OK, 0 rows affected (0.07 sec)
 *On Ubuntu 20.04, Nginx has one server block enabled by default and is configured to serve documents out of a directory at /var/www/html. While this works well for a single site, it can become difficult to manage if you are hosting multiple sites. Instead of modifying /var/www/html, we’ll create a directory structure within /var/www for the projectLEMP website, leaving /var/www/html in place as the default directory to be served if a client request does not match any other site.*
 
 #### Creating the root web directory for projectLEMP
-
 ```sudo mkdir /var/www/projectLEMP```
 
 #### Assigning ownership of the directory with the $USER environment variable, which will reference the current system user
-
 ```sudo chown -R $USER:$USER /var/www/projectLEMP```
 
 #### Opening a new configuration file in Nginx’s sites-available directory. Here, we’ll use nano:
-
 ```sudo nano /etc/nginx/sites-available/projectLEMP```
 
 #### This will create a new blank file. Pasting the following bare-bones configuration:
-
 ```
 #/etc/nginx/sites-available/projectLEMP
 
@@ -175,16 +171,97 @@ server {
 
 }
 ```
-#### Save and close the file. If you’re using nano, you can do so by typing CTRL+X and then y and ENTER to confirm.
+*Save and close the file. Used 'nano' so I typed in CTRL+X and then y and ENTER to confirm.*
 
-### Activating the configuration by linking to the config file from Nginx’s sites-enabled directory:
-
+#### Activating the configuration by linking to the config file from Nginx’s sites-enabled directory:
 ```sudo ln -s /etc/nginx/sites-available/projectLEMP /etc/nginx/sites-enabled/```
 
+*This will tell Nginx to use the configuration next time it is reloaded.*
 
+#### Testing the configuration for syntax errors:
+```sudo nginx -t```
+
+#### The following output shows that there are no errors
+```
+nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+nginx: configuration file /etc/nginx/nginx.conf test is successful
+```
+
+#### DIsabling default Nginx host that is currently configured to listen on port 80:
+```sudo unlink /etc/nginx/sites-enabled/default```
+
+#### Reloading Nginx to apply changes
+```sudo systemctl reload nginx```
+
+*A new website is now active, but the web root /var/www/projectLEMP is still empty.*
+
+#### Creating an index.html file in that location so that the new server block works as expected:
+```
+sudo echo 'Hello LEMP from hostname' $(curl -s http://169.254.169.254/latest/meta-data/public-hostname) 'with public IP' $(curl -s http://169.254.169.254/latest/meta-data/public-ipv4) > /var/www/projectLEMP/index.html
+```
+#### Opening website URL using IP address on browser:
+```http://<Public-IP-Address>:80```
+
+*The image below shows the text from ‘echo’ command taht was written to index.html file. It means the Nginx site is working as expected. In the output, the server’s public hostname (DNS name) and public IP address are also seen.*
+
+![]()
+
+#### Running the command below to try it out using public hostname
+```http://<Public-DNS-Name>:80```
+
+
+---
+
+### TESTING PHP WITH NGINX
+
+---
+
+#### Testing to validate that Nginx can correctly hand .php files off to your PHP processor. This was done by creating a test PHP file in the document root. Open a new file called info.php within the document root:
+```sudo nano /var/www/projectLEMP/info.php```
+
+#### Typing the following lines into the new file. This is valid PHP code that will return information about the server:
+```
+<?php
+phpinfo();
+```
+
+#### Accessing this page in your web browser by visiting the domain name or public IP address you’ve set up in your Nginx configuration file, followed by /info.php
+```http://IP_address/info.php```
+
+*This shows a web page containing detailed information about the server.*
+
+![]()
+
+#### Removing the file created as it contains sensitive information about the PHP environment 
+```sudo rm /var/www/your_domain/info.php```
+
+---
+### RETRIEVING DATA FROM MYSQL DATABASE WITH PHP (CONTINUED)
+---
+
+#### Connecting to MySQL
+```sudo mysql -p```
+
+#### Creating a database
+```mysql> CREATE DATABASE `example_database`;```
+
+#### Creating a new user and granting him full privileges on the just created database. 'password' was replaced with secure password.
+```mysql>  CREATE USER 'example_user'@'%' IDENTIFIED WITH mysql_native_password BY 'password';```
+
+#### Giving the user permission over the example_database database
+```mysql> GRANT ALL ON example_database.* TO 'example_user'@'%';```
+
+#### Exiting MySQL shell
+```mysql> exit```
+
+#### Testing if the new user has the proper permissions by logging in to the MySQL console using the custom user credentials:
+```mysql -u example_user -p```
+
+#### Confirming access to the example_database database:
+```mysql> SHOW DATABASES;```
 
 #### Output
-
+```
 SHOW DATABASES;
 +--------------------+
 | Database           |
@@ -194,20 +271,90 @@ SHOW DATABASES;
 | performance_schema |
 +--------------------+
 3 rows in set (0.01 sec)
+```
 
-#### Test Table
-
+#### Creating a Test Table named todo_list:
+```
 mysql> CREATE TABLE example_database.todo_list (
     -> item_id INT AUTO_INCREMENT,
     -> content VARCHAR(255),
     -> PRIMARY KEY(item_id)
     -> );
+```
+
+#### Inserting content into the test table
+```mysql> INSERT INTO example_database.todo_list (content) VALUES ("My first important item");```
+```mysql> INSERT INTO example_database.todo_list (content) VALUES ("My first important item");```
+```mysql> INSERT INTO example_database.todo_list (content) VALUES ("My second important item");```
+```mysql> INSERT INTO example_database.todo_list (content) VALUES ("My third important item");```
+```mysql> INSERT INTO example_database.todo_list (content) VALUES ("My fourth important item");```
+
+#### Confirming that the data was successfully saved:
+
+```
+Output
++---------+---------------------------+
+| item_id | content                   |
++---------+---------------------------+
+|       1 | My first important item   |
+|       2 | My first important item   |
+|       3 | My second important item  |
+|       4 | My third  important item  |
+|       5 | My fourth  important item |
++---------+---------------------------+
+5 rows in set (0.03 sec)
+
+mysql> exit
+Bye
+
+```
+
+#### Exiting MySQL console
+```mysql> exit```
+
+#### Creating a PHP script that will connect to MySQL and query for the database content. 
+```nano /var/www/projectLEMP/todo_list.php```
+
+#### The following PHP script connects to the MySQL database and queries for the content of the todo_list table, displays the results in a list.
+#### Copying the content into the todo_list.php script where 'password' is replaced with the chosen password:
+```
+<?php
+$user = "example_user";
+$password = "password";
+$database = "example_database";
+$table = "todo_list";
+
+try {
+  $db = new PDO("mysql:host=localhost;dbname=$database", $user, $password);
+  echo "<h2>TODO</h2><ol>";
+  foreach($db->query("SELECT content FROM $table") as $row) {
+    echo "<li>" . $row['content'] . "</li>";
+  }
+  echo "</ol>";
+} catch (PDOException $e) {
+    print "Error!: " . $e->getMessage() . "<br/>";
+    die();
+}
+```
+
+#### Accessing the page in a web browser by visiting the domain name or public IP address configured for your website, followed by /todo_list.php
+```http://<IP_address>/todo_list.php```
+
+*This shows the page below, showing the content inserted into the test table:*
+
+![]()
+
+*The PHP environment is ready to connect and interact with MySQL server.*
 
 
 
 
 
-*Trouble shooting*
+---
+---
+---
+
+### Trouble shooting step 5
 #### Migrated to the folder/directory where the new configuration file was opened
 ```cd /etc/nginx/sites-available```
 
