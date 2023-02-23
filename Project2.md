@@ -44,7 +44,9 @@ curl http://127.0.0.1:80
 
 ```curl -s http://169.254.169.254/latest/meta-data/public-ipv4```
 
+---
 ![NGINX Web Server Installation](https://github.com/Abbysola/DevOps-Proj/blob/0a1db7cfcdf46e8ddae8d4128fa0d734c585ce37/Images/Screenshot%202023-02-22%20at%2011.48.17.png)
+---
 
 *The image above shows that the web server is now correctly installed and accessible through your firewall. It is the same content that was gotten by ‘curl’ command, but represented in nice HTML formatting by on the web browser.*
 
@@ -204,7 +206,9 @@ sudo echo 'Hello LEMP from hostname' $(curl -s http://169.254.169.254/latest/met
 
 *The image below shows the text from ‘echo’ command taht was written to index.html file. It means the Nginx site is working as expected. In the output, the server’s public hostname (DNS name) and public IP address are also seen.*
 
-![]()
+---
+![Text from 'echo' command](https://github.com/Abbysola/DevOps-Proj/blob/a844a629ae7d5275a3c53dd11453c29927e07248/Images/Screenshot%202023-02-22%20at%2014.41.18.png)
+---
 
 #### Running the command below to try it out using public hostname
 ```http://<Public-DNS-Name>:80```
@@ -230,7 +234,9 @@ phpinfo();
 
 *This shows a web page containing detailed information about the server.*
 
-![]()
+---
+![Server Information](https://github.com/Abbysola/DevOps-Proj/blob/a844a629ae7d5275a3c53dd11453c29927e07248/Images/Screenshot%202023-02-22%20at%2019.33.28.png)
+---
 
 #### Removing the file created as it contains sensitive information about the PHP environment 
 ```sudo rm /var/www/your_domain/info.php```
@@ -342,19 +348,17 @@ try {
 
 *This shows the page below, showing the content inserted into the test table:*
 
-![]()
+---
+![todo_list content](https://github.com/Abbysola/DevOps-Proj/blob/a844a629ae7d5275a3c53dd11453c29927e07248/Images/Screenshot%202023-02-24%20at%2000.03.01.png)
+---
 
 *The PHP environment is ready to connect and interact with MySQL server.*
 
-
-
-
-
 ---
 ---
 ---
 
-### Trouble shooting step 5
+### Trouble shooting notes for step 5
 #### Migrated to the folder/directory where the new configuration file was opened
 ```cd /etc/nginx/sites-available```
 
@@ -395,14 +399,13 @@ server {
 ```
 
 *Since we are using sudo, you close with*
-1. esc
-2. :wq
-3. press ENTER
+1. :wq
+2. press ENTER
 
 #### Restart nginx with:
 ```sudo systemctl restart nginx```
 
-#### re-run the URL to check
+#### Re-run the URL to check
 ```http://54.236.48.197/info.php```
 
 
