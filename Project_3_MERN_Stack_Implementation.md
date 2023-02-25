@@ -48,7 +48,9 @@
 #### Checking that the pcakage.json file has been created
 ```ls```
 
-### Installing Expressjs on the server
+---
+### INSTALLING EXPRESSJS
+---
 
 *Express is a framework for Node.js, therefore a lot of things developers would have programmed is already taken care of out of the box. It simplifies development, and abstracts a lot of low level details. For example, Express helps to define routes of your application based on HTTP methods and URLs.*
 
@@ -63,6 +65,104 @@
 
 #### Installing the dotenv module
 ```npm install dotenv```
+
+#### Opening the index.js file
+```vim index.js```
+
+#### Pasting the code below into the file
+```
+const express = require('express');
+require('dotenv').config();
+
+const app = express();
+
+const port = process.env.PORT || 5000;
+
+app.use((req, res, next) => {
+res.header("Access-Control-Allow-Origin", "\*");
+res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+next();
+});
+
+app.use((req, res, next) => {
+res.send('Welcome to Express');
+});
+
+app.listen(port, () => {
+console.log(`Server running on port ${port}`)
+});
+```
+
+*Use :w to save in vim and use :qa to exit vim.*
+
+#### Starting the server to see if it works. Running the command below in the same directory where index.js file was stored.
+```node index.js```
+
+#### Create an inbound rule to open port 5000
+
+
+
+
+*Server’s Public IP and public DNS name can be gotten either from the AWS web console in EC2 details or by running curl -s http://169.254.169.254/latest/meta-data/public-ipv4 for Public IP address or curl -s http://169.254.169.254/latest/meta-data/public-hostname for Public DNS name.
+
+#### Accessing the server through port 5000
+```http://<PublicIP-or-PublicDNS>:5000```
+
+### Routes
+The To-Do application needs to be able to:
+1. Create a new task
+1. Display list of all tasks
+1. Delete a completed task
+
+*Each task will be associated with some particular endpoint and will use different standard HTTP request methods: POST, GET, DELETE. For each task, routes will be created that will define various endpoints that the To-do app will depend on. 
+
+#### Create a folder 'routes'
+```mkdir routes```
+
+#### Changin the directory to routes folder
+```cd routes```
+
+#### Create a api.js file
+```touch api.js```
+
+#### Opening the file
+```vim api.js```
+
+#### Pasting the code below into the file
+
+```
+const express = require ('express');
+const router = express.Router();
+
+router.get('/todos', (req, res, next) => {
+
+});
+
+router.post('/todos', (req, res, next) => {
+
+});
+
+router.delete('/todos/:id', (req, res, next) => {
+
+})
+
+module.exports = router;
+```
+
+---
+### MODELS
+---
+
+
+
+
+
+
+
+
+
+
+
 
 
 
