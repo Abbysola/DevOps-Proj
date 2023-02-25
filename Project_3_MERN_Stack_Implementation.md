@@ -159,6 +159,16 @@ module.exports = router;
 ---
 ### MODELS
 ---
+*Since the app is going to make use of Mongodb which is a NoSQL database, a model will be created. A model is at the heart of JavaScript based applications, and it is what makes it interactive. Models will also be used to define the database schema. This will help to define the fields stored in each Mongodb document.*
+
+*The Schema is a blueprint of how the database will be constructed, including other data fields that may not be required to be stored in the database. These are known as virtual properties.*
+
+*To create a Schema and a model, mongoose which is a Node.js package that makes working with mongodb easier is installed*
+
+#### Changing directory back to Todo folder with cd .. and installing Mongoose
+
+
+
 
 
 
