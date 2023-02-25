@@ -45,6 +45,8 @@
 #### Using the command below to initialise the project, so that a new file named package.json will be created. This file will normally contain information about the application and the dependencies that it needs to run. Press Enter several times to accept default values, then accept to write out the package.json file by typing yes.
 ```npm init```
 
+![Creating package.json file](https://github.com/Abbysola/DevOps-Proj/blob/70ac82ad681469ef9b66964969c668fcfc6e9135/Images/Screenshot%202023-02-25%20at%2016.08.11.png)
+
 #### Checking that the pcakage.json file has been created
 ```ls```
 
@@ -98,15 +100,20 @@ console.log(`Server running on port ${port}`)
 #### Starting the server to see if it works. Running the command below in the same directory where index.js file was stored.
 ```node index.js```
 
+#### The image below shows the server running on port 5000
+![Server Running on Port 5000](https://github.com/Abbysola/DevOps-Proj/blob/70ac82ad681469ef9b66964969c668fcfc6e9135/Images/Screenshot%202023-02-25%20at%2016.29.22.png)
+
 #### Create an inbound rule to open port 5000
 
-
-
-
-*Server’s Public IP and public DNS name can be gotten either from the AWS web console in EC2 details or by running curl -s http://169.254.169.254/latest/meta-data/public-ipv4 for Public IP address or curl -s http://169.254.169.254/latest/meta-data/public-hostname for Public DNS name.
+*Server’s Public IP and public DNS name can be gotten either from the AWS web console in EC2 details or by running curl -s http://169.254.169.254/latest/meta-data/public-ipv4 for Public IP address or curl -s http://169.254.169.254/latest/meta-data/public-hostname for Public DNS name.*
 
 #### Accessing the server through port 5000
-```http://<PublicIP-or-PublicDNS>:5000```
+```http://<100.25.44.38/>:5000``` 
+OR
+```http://ec2-100-25-44-38.compute-1.amazonaws.com:5000```
+
+#### The image below is seen
+![Welcome to Express](https://github.com/Abbysola/DevOps-Proj/blob/70ac82ad681469ef9b66964969c668fcfc6e9135/Images/Screenshot%202023-02-25%20at%2016.43.01.png)
 
 ### Routes
 The To-Do application needs to be able to:
@@ -114,7 +121,7 @@ The To-Do application needs to be able to:
 1. Display list of all tasks
 1. Delete a completed task
 
-*Each task will be associated with some particular endpoint and will use different standard HTTP request methods: POST, GET, DELETE. For each task, routes will be created that will define various endpoints that the To-do app will depend on. 
+*Each task will be associated with some particular endpoint and will use different standard HTTP request methods: POST, GET, DELETE. For each task, routes will be created that will define various endpoints that the To-do app will depend on. *
 
 #### Create a folder 'routes'
 ```mkdir routes```
