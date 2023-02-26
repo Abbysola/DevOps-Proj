@@ -166,10 +166,78 @@ module.exports = router;
 *To create a Schema and a model, mongoose which is a Node.js package that makes working with mongodb easier is installed*
 
 #### Changing directory back to Todo folder with cd .. and installing Mongoose
+```npm install mongoose```
 
+#### Creating a new folder 'models':
+```mkdir models```
 
+#### Change directory into the newly created folder models
+```cd models```
 
+#### Create a file named todo.js
+```touch todo.js```
 
+*All three commands above can be defined in one line to be executed consequently with help of && operator:*
+```mkdir models && cd models && touch todo.js```
+
+#### Opening vim todo.js fle and pasting the code below
+```
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+
+//create schema for todo
+const TodoSchema = new Schema({
+action: {
+type: String,
+required: [true, 'The todo text field is required']
+}
+})
+
+//create model for todo
+const Todo = mongoose.model('todo', TodoSchema);
+
+module.exports = Todo;
+```
+
+#### Updating our routes from the file api.js in ‘routes’ directory to make use of the new model. To do this,the api.js file is opened with:
+```vim api.js```
+
+*Delete the code inside with :%d command
+
+#### Pasting the code below into it then save with :w and exit with :qa
+```
+const express = require ('express');
+const router = express.Router();
+const Todo = require('../models/todo');
+
+router.get('/todos', (req, res, next) => {
+
+//this will return all the data, exposing only the id and action field to the client
+Todo.find({}, 'action')
+.then(data => res.json(data))
+.catch(next)
+});
+
+router.post('/todos', (req, res, next) => {
+if(req.body.action){
+Todo.create(req.body)
+.then(data => res.json(data))
+.catch(next)
+}else {
+res.json({
+error: "The input field is empty"
+})
+}
+});
+
+router.delete('/todos/:id', (req, res, next) => {
+Todo.findOneAndDelete({"_id": req.params.id})
+.then(data => res.json(data))
+.catch(next)
+})
+
+module.exports = router;
+```
 
 
 
