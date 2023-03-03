@@ -245,6 +245,87 @@ module.exports = router;
 
 *We need a database where we will store our data. For this we will make use of mLab. mLab provides MongoDB database as a service solution (DBaaS), so to make life easy, we will need to sign up for a shared clusters free account, which is ideal for our use case. Follow the sign up process, select AWS as the cloud provider, and choose a region near you.*
 
+1. Create a MongoDB cluster and allow access to it from anywhere (not secure but this is just for testing)
+1. Under the Network Access tab, Change the time of deleting the entry from 6 Hours to 1 Week
+1. Under the Cluster's tab (Atlas), Create a MongoDB database and collection inside mLab
+1. Select 'Add My Own Data'
+
+#### In the index.js file, process.env was specified to access environment variables, but the file has not been created.
+
+#### Creating a file in your Todo directory and name it .env.
+```
+touch .env
+vi .env
+```
+
+#### Adding the connection string to access the database in it, just as below:
+```DB = 'mongodb+srv://<username>:<password>@<network-address>/<dbname>?retryWrites=true&w=majority'```
+
+#### where username, password, network-address and database are updated with the credentials used.
+
+*The connection string can be gotten by connecting to the cluster then selecting 'connect your application'. Make sure the DRIVER is valued at node.js.*
+
+#### Updating the index.js to reflect the use of .env so that Node.js can connect to the database. The existing content in the file is deleted, and updated it with the code below.
+
+#### Opening the file
+
+```vim index.js```
+
+#### To do this:
+1. Press esc
+1. Type :%d to delete the content of index.js
+1. Hit ‘Enter’
+1. Press i to enter the insert mode in vim
+1. Paste the entire code below in the file
+1. Type :w to save the file
+1. Type :qa to quit
+
+```
+const express = require('express');
+const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+const routes = require('./routes/api');
+const path = require('path');
+require('dotenv').config();
+
+const app = express();
+
+const port = process.env.PORT || 5000;
+
+//connect to the database
+mongoose.connect(process.env.DB, { useNewUrlParser: true, useUnifiedTopology: true })
+.then(() => console.log(`Database connected successfully`))
+.catch(err => console.log(err));
+
+//since mongoose promise is depreciated, we overide it with node's promise
+mongoose.Promise = global.Promise;
+
+app.use((req, res, next) => {
+res.header("Access-Control-Allow-Origin", "\*");
+res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+next();
+});
+
+app.use(bodyParser.json());
+
+app.use('/api', routes);
+
+app.use((err, req, res, next) => {
+console.log(err);
+next();
+});
+
+app.listen(port, () => {
+console.log(`Server running on port ${port}`)
+});
+```
+
+*Using environment variables to store information is considered more secure and best practice to separate configuration and secret data from the application, instead of writing connection strings directly inside the index.js application file.
+
+#### Starting the server
+```index node.js```
+
+*A message ‘Database connected successfully’ shows that the backend is configured.*
 
 
 
