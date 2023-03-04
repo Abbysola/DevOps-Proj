@@ -327,6 +327,33 @@ console.log(`Server running on port ${port}`)
 
 *A message ‘Database connected successfully’ shows that the backend is configured.*
 
+### Testing Backend Code without Frontend using RESTful API
+
+#### Here, ReactJS will be used to create a Frontend UI and Postman will be used to test the API.
+
+#### Open Postman, create a POST request to the API 
+```http://<PublicIP-or-PublicDNS>:5000/api/todos``` 
+
+#### This request sends a new task to our To-Do list so the application could store it in the database.
+
+#### Set header key Content-Type as application/json
+
+#### Post a request to the API. Also, create a GET request to the API on:
+```http://<PublicIP-or-PublicDNS>:5000/api/todos```
+
+*This request retrieves all existing records from out To-do application (backend requests these records from the database and sends it us back as a response to GET request).*
+
+### FRONTEND CREATION
+
+#### Creating a user interface for a Web client (browser) to interact with the application via API. To start out with the frontend of the To-do app, the create-react-app command to structure the app.
+
+#### In the To-do directory, run:
+```npx create-react-app client```
+
+*This will create a new folder in your Todo directory called client, where you will add all the react code
+
+
+
 
 
 
