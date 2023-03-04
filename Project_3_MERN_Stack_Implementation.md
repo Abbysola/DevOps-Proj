@@ -327,7 +327,7 @@ console.log(`Server running on port ${port}`)
 
 *A message ‘Database connected successfully’ shows that the backend is configured.*
 
-### Testing Backend Code without Frontend using RESTful API
+##### TESTING BACKEND CODE WITHOUT FRONTEND USING RESTFUL API
 
 #### Here, ReactJS will be used to create a Frontend UI and Postman will be used to test the API.
 
@@ -351,6 +351,31 @@ console.log(`Server running on port ${port}`)
 ```npx create-react-app client```
 
 *This will create a new folder in your Todo directory called client, where you will add all the react code
+
+##### RUNNING A REACT APP
+
+#### Before testing the react app, there are some dependencies that need to be installed.
+
+1. Installing concurrently. This is used to run more than one command simultaneously from the same terminal window.
+```npm install concurrently --save-dev```
+1. Install nodemon. This is used to run and monitor the server. If there is any change in the server code, Nodemon helps to restart the server automatically if there is any change in the server code and load the new changes.
+```npm install nodemon --save-dev```
+1. The package.json file is opened from the Todo folder. Replace the content part of "scripts" in the file with the code below:
+```
+"scripts": {
+"start": "node index.js",
+"start-watch": "nodemon index.js",
+"dev": "concurrently \"npm run start-watch\" \"cd client && npm start\""
+},
+```
+
+#### Configuring Proxy in package.json
+1. Change the directory to the client folder
+1. Open the package.json file
+```vi package.json```
+1. Add the key value pair in the package.json file 
+```"proxy": "http://localhost:5000"```
+*The proxy configuration in number 3 above is to make it possible to access the application directly from the browser by simply calling the server url like http://localhost:5000 rather than always including the entire path like http://localhost:5000/api/todos
 
 
 
