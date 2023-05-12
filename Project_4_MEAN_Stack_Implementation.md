@@ -2,12 +2,13 @@
 ---
 ### Install NodeJS
 ---
-Update ubuntu
-`sudo apt update`
-Upgrade ubuntu
+### Update ubuntu
+```sudo apt update```
 
-`sudo apt upgrade`
-Add certificates
+### Upgrade ubuntu ###
+```sudo apt upgrade```
+
+### Add certificates ###
 
 sudo apt -y install curl dirmngr apt-transport-https lsb-release ca-certificates
 
