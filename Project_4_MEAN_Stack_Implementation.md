@@ -32,4 +32,45 @@ For this application, book records that contain book name, isbn number, author, 
 
 ### Start the server
 
-sudo service mongodb start
+```sudo service mongodb start```
+
+### Check that the service is up and running
+
+```sudo systemctl status mongodb```
+
+### Install npm – Node package manager
+
+```sudo apt install -y npm```
+
+### Install a body-parser package
+
+The ‘body-parser’ package will help to process JSON files that are passed in requests to the server
+
+```sudo npm install body-parser```
+
+### Create a folder named ‘Books’
+
+```mkdir Books && cd Books```
+
+### In the Books directory, initialize npm project
+
+```npm init```
+
+### Add a file to it named server.js
+
+```vi server.js```
+
+### Copy and paste the web server code below into the server.js file
+
+```
+var express = require('express');
+var bodyParser = require('body-parser');
+var app = express();
+app.use(express.static(__dirname + '/public'));
+app.use(bodyParser.json());
+require('./apps/routes')(app);
+app.set('port', 3300);
+app.listen(app.get('port'), function() {
+    console.log('Server up: http://localhost:' + app.get('port'));
+});
+```
