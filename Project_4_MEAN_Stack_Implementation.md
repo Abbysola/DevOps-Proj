@@ -306,6 +306,8 @@ http://34.230.81.169:3300
 
 ![Web book register application](https://github.com/Abbysola/DevOps-Proj/blob/9132d2f0ddd3230ec4a744935254b74fd7d3af1c/Images/Web%20Book%20Register%20Application.png)
 
+![Web book register application 2](https://github.com/Abbysola/DevOps-Proj/blob/e633c297de3ee218d6a59f8a20781eca80d46bfd/Images/Web%20Book%20Register%20Application2.png)
+
 
 
 *How to get your server’s Public IP and public DNS name:*
