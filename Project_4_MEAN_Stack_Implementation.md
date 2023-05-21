@@ -294,6 +294,8 @@ Cpoy and paste the code below into index.html file.
 
 The server is now up and running. It can be connected via port 3300. For this, TCP port 3300 will be opened in the AWS Web Console for the EC2 Instance.
 
+![Opening Port 3300](https://github.com/Abbysola/DevOps-Proj/blob/1172bc074aabb836f129a05728b6e370cd81d56f/Images/Port%203300.png)
+
 #### A separate Putty or SSH console can be run to test what curl command returns locally.
 
 curl -s http://localhost:3300
@@ -307,8 +309,6 @@ http://34.230.81.169:3300
 ![Web book register application](https://github.com/Abbysola/DevOps-Proj/blob/9132d2f0ddd3230ec4a744935254b74fd7d3af1c/Images/Web%20Book%20Register%20Application.png)
 
 ![Web book register application 2](https://github.com/Abbysola/DevOps-Proj/blob/e633c297de3ee218d6a59f8a20781eca80d46bfd/Images/Web%20Book%20Register%20Application2.png)
-
-
 
 *How to get your server’s Public IP and public DNS name:*
 
