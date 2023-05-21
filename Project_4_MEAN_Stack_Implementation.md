@@ -5,10 +5,10 @@
 #### Update ubuntu
 ```sudo apt update```
 
-#### Upgrade ubuntu ###
+#### Upgrade ubuntu
 ```sudo apt upgrade```
 
-#### Add certificates ###
+#### Add certificates
 
 sudo apt -y install curl dirmngr apt-transport-https lsb-release ca-certificates
 
@@ -304,7 +304,9 @@ curl -s http://localhost:3300
 
 http://34.230.81.169:3300
 
-!Web book register application(https://github.com/Abbysola/DevOps-Proj/blob/9132d2f0ddd3230ec4a744935254b74fd7d3af1c/Images/Web%20Book%20Register%20Application.png)
+![Web book register application](https://github.com/Abbysola/DevOps-Proj/blob/9132d2f0ddd3230ec4a744935254b74fd7d3af1c/Images/Web%20Book%20Register%20Application.png)
+
+
 
 *How to get your server’s Public IP and public DNS name:*
 
