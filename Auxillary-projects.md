@@ -1,23 +1,19 @@
-Create the project folder called Shell
-mkdir Shell
+## Auxillary Project 1 : SHELL SCRIPTING
 
-Move into the Shell folder
-cd Shell
+#### Created the project folder called Shell
+```mkdir Shell```
 
-In the Shell directory, create a file for your Shell script named “script_task.sh”
-touch script_task.sh
+#### Moved into the Shell folder
+```cd Shell```
 
-Copy/write your Shell script into the *”script_task.sh” file using vim editor.
-vi script_task.sh
+#### In the Shell directory, created a file for my shell script named “script_task.sh”
+```touch script_task.sh```
 
-NOTE: You can develop your shell script on a note pad, before copying and paste into the “script_task.sh” file.
+#### Opened the ”script_task.sh” file using vim editor
+```vi script_task.sh```
 
-Make the script file executable:
-chmod +x script_task.sh
-
-Run the script :
-sudo ./script_task.sh
-
+#### Insert the code below into the file
+```
 #!/bin/bash
 
 # 1. Ask the user for their name and age, and output a message with their name and the year they were born
@@ -139,3 +135,14 @@ done
 
 # Output the reversed sentence
 echo "Reversed sentence: $reversed_sentence"
+```
+
+#### Made the script file executable
+```chmod +x script_task.sh```
+
+#### Ran the script
+sudo ./script_task.sh
+
+#### Below is a link that shows how my script worked
+
+![Shell Scripting](https://github.com/Abbysola/DevOps-Proj/blob/da64ee82b09b0e8d88f94791253821c449a2ad71/Images/Screen%20Recording%202023-05-22%20at%2023.54.03.mov)
