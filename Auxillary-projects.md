@@ -1,5 +1,18 @@
 ## Auxillary Project 1 : SHELL SCRIPTING
 
+#### The following tasks will be performed using shell scripting. The recorded video of how my script worked is also seen below.
+
+1. Ask the user for their name and age, and output a message with their name and the year they were born.
+1. Create a new directory with a name provided by the user, and navigate into it.
+1. List all files in the current directory, sorted by file size.
+1. Count the number of files in the current directory and output the result.
+1. Take a list of numbers as input from the user and output the sum of those numbers.
+1. Output a random number between 1 and 100.
+1. Create a backup of a specified file by copying it to a backup directory with a timestamp in the filename.
+1. Check if a website is online and output a message indicating whether it is up or down.
+1. Convert a temperature in Celsius to Fahrenheit, using input from the user.
+1. Ask the user for a sentence, then output the sentence in reverse order. For example, if the user enters “Hello, world!”, the script should output “!dlrow ,olleH”.
+
 #### Created the project folder called Shell
 ```mkdir Shell```
 
