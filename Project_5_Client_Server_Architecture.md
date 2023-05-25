@@ -8,11 +8,11 @@
 (It can also be Internet connection, but it is a common practice to place Web Server and DB Server close to each other in local network).*
 
 ### Practical Example of LAMP Website
-Open up your Ubuntu or Windows terminal and run curl command
+#### Open up your Ubuntu or Windows terminal and run curl command
 
 curl -Iv www.linkedin.com
 
-#### I used the terminal on my Mac so I had 'curl' installed it by running
+#### I used the terminal on my Mac so I had 'curl' installed it by running:
 ```brew install curl```
 
 *If your Ubuntu does not have ‘curl’, you can install it by running
@@ -75,13 +75,31 @@ allow all IP addresses to reach your ‘mysql server’ – allow access only to
 #### Check to see that mysql is runnin on mysql server
 ```sudo systemctl status mysql```
 
-#### Create a user on the MySQL server and use that use to log in from the remote server instead of the root user
+#### Connect to mysql monitor on mysql server
 
+```sudo mysql -u root```
 
+#### Create a user on mysql server
 
+```create user 'user'@'%' identified by 'password';```
 
+*user and password can be replaced with any username and password of your choice. Here, I used user 'abby'.
 
+#### On mysql client, connect to mysql server using the code below:
 
+```mysql -h 'IP address of mysql server' -u 'username' -p```
+
+#### My code looks like this:
+
+```mysql -h 18.212.12.106 -u abby -p```
+
+This will prompt you to enter your password and you are successfully connected.
+
+#### Check that you have successfully connected to a remote MySQL server and can perform SQL queries:
+
+```Show databases;```
+
+#### A fully functional MySQL Client-Server set up has been deployed.
 
 
 
