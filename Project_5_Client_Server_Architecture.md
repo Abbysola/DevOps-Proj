@@ -72,6 +72,11 @@ allow all IP addresses to reach your ‘mysql server’ – allow access only to
 #### From mysql client Linux Server, connect remotely to mysql server Database Engine without using SSH. 
 #### Using Sql utility to perform this action:
 
+#### Check to see that mysql is runnin on mysql server
+```sudo systemctl status mysql```
+
+#### Create a user on the MySQL server and use that use to log in from the remote server instead of the root user
+
 
 
 
