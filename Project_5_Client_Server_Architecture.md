@@ -63,11 +63,14 @@ allow all IP addresses to reach your ‘mysql server’ – allow access only to
 
 #### Opening Port 3306 in mysql server
 
+![Port 3306]()
+
 #### Configure MySQL server to allow connections from remote hosts
 
 ```sudo vi /etc/mysql/mysql.conf.d/mysqld.cnf```
 
 #### Replace ‘127.0.0.1’ to ‘0.0.0.0’ as seen below:
+![Replacing Ports]()
 
 #### From mysql client Linux Server, connect remotely to mysql server Database Engine without using SSH. 
 #### Using Sql utility to perform this action:
