@@ -70,7 +70,7 @@ allow all IP addresses to reach your ‘mysql server’ – allow access only to
 ```sudo vi /etc/mysql/mysql.conf.d/mysqld.cnf```
 
 #### Replace ‘127.0.0.1’ to ‘0.0.0.0’ as seen below:
-![Replacing Ports]()
+![Replacing Ports](https://github.com/Abbysola/DevOps-Proj/blob/9ee6f303a6c8c744a434c642868e3bbf57acff98/Images/Replacing%20Port.png)
 
 #### From mysql client Linux Server, connect remotely to mysql server Database Engine without using SSH. 
 #### Using Sql utility to perform this action:
