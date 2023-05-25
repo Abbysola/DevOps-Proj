@@ -22,7 +22,7 @@ curl -Iv www.linkedin.com
 
 #### The response from the remote server is shown in below output. The requests from the URL are being served by a computer with an IP address 162.241.117.48 on port 80.
 
-![Response from Remote Server]()
+![Response from Remote Server](https://github.com/Abbysola/DevOps-Proj/blob/9db9539edee94bd9ea64a0ddc2bf15fce5776dcd/Images/Response%20from%20Client.png)
 
 ### IMPLEMENT A CLIENT SERVER ARCHITECTURE USING MYSQL DATABASE MANAGEMENT SYSTEM (DBMS).
 
