@@ -63,7 +63,7 @@ allow all IP addresses to reach your ‘mysql server’ – allow access only to
 
 #### Opening Port 3306 in mysql server
 
-![Port 3306]()
+![Port 3306](https://github.com/Abbysola/DevOps-Proj/blob/183c7214160573357ec72645ab8d69331e7f5b5c/Images/Port%203306.png)
 
 #### Configure MySQL server to allow connections from remote hosts
 
