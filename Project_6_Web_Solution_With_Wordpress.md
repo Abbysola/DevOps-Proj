@@ -128,7 +128,7 @@ use the lvrename command and re-mount to the correct directory*
 
 ```mount /dev/webdata-vg/db-lv /mnt/db```
 
-### STEP 3: Install Wordpress on your Web Server EC2 Instance
+### STEP 3: Install Wordpress on your Web Server EC2
 1. Update the repository
 
 ```sudo yum -y update```
@@ -159,7 +159,7 @@ setsebool -P httpd_execmem 1
 ```
 
 5. Restart Apache
-
+##
 ```sudo systemctl restart httpd```
 
 6. Download wordpress and copy wordpress to var/www/html
@@ -171,14 +171,40 @@ sudo tar xzvf latest.tar.gz
 sudo rm -rf latest.tar.gz
 cp wordpress/wp-config-sample.php wordpress/wp-config.php
 cp -R wordpress /var/www/html/
- ```
-Configure SELinux Policies
+```
 
-  sudo chown -R apache:apache /var/www/html/wordpress
-  sudo chcon -t httpd_sys_rw_content_t /var/www/html/wordpress -R
-  sudo setsebool -P httpd_can_network_connect=1
+7. Configure SELinux Policies
+```
+sudo chown -R apache:apache /var/www/html/wordpress
+sudo chcon -t httpd_sys_rw_content_t /var/www/html/wordpress -R
+sudo setsebool -P httpd_can_network_connect=1
+```
 
+### STEP 4: Install MySQL on your DB Server EC2
+```
+sudo yum update
+sudo yum install mysql-server
+```
 
+Verify that the service is up and running by using sudo systemctl status mysqld, if it is not running, restart the service and enable it so it will be running even after reboot:
+
+```
+sudo systemctl restart mysqld
+sudo systemctl enable mysqld
+```
+
+### STEP 5: Configure DB to work with Wordpress
+```sudo mysql```
+
+Create a database and name it 'wordpress'
+```CREATE DATABASE wordpress;```
+
+Create a username and a password.
+```CREATE USER `myuser`@`<Web-Server-Private-IP-Address>` IDENTIFIED BY 'mypass';```
+GRANT ALL ON wordpress.* TO 'myuser'@'<Web-Server-Private-IP-Address>';
+FLUSH PRIVILEGES;
+SHOW DATABASES;
+exit
 
 
 
