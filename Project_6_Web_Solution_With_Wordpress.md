@@ -29,7 +29,6 @@ sudo pvcreate /dev/xvdf1
 sudo pvcreate /dev/xvdg1
 sudo pvcreate /dev/xvdh1 
 ```
-
 9. Verify that your Physical volume has been created successfully by running 
 
 ```sudo pvs```
@@ -43,7 +42,10 @@ sudo pvcreate /dev/xvdh1
 sudo lvcreate -n apps-lv -L 14G webdata-vg
 sudo lvcreate -n logs-lv -L 14G webdata-vg
 ```
-12. Verify that your Logical Volume has been created successfully by running ```sudo lvs```
+12. Verify that your Logical Volume has been created successfully by running 
+
+```sudo lvs```
+
 13. Verify the entire setup
 ```
 sudo vgdisplay -v #view complete setup - VG, PV, and LV
@@ -73,18 +75,26 @@ sudo mkfs -t ext4 /dev/webdata-vg/logs-lv
 19. Mount /var/log on logs-lv logical volume. (Note that all the existing data on /var/log will be deleted. That is why step 15 above is very important)
 
 ```sudo mount /dev/webdata-vg/logs-lv /var/log```
+
 20. Restore log files back into /var/log directory
+
 ```sudo rsync -av /home/recovery/logs/. /var/log```
+
 21. Update /etc/fstab file so that the mount configuration will persist after restart of the server.
 The UUID of the device will be used to update the /etc/fstab file. RUn the code below to get the UUID.
-```sudo blkid```
-```sudo vi /etc/fstab```
+```
+sudo blkid
+sudo vi /etc/fstab
+```
 Update /etc/fstab in the format shown below using your own UUID and rememeber to remove the leading and ending quotes.
+
 22. Test the configuration and reload the daemon
+
 ```
 sudo mount -a
 sudo systemctl daemon-reload
 ```
+
 23. Verify your setup by running ```df -h```. The output must look like this:
 
 ### STEP 2: Prepare the Database Server
@@ -99,16 +109,74 @@ sudo systemctl daemon-reload
 *Tip: Incase you make a mistake and did not use db-lv instaed of apps-lv and mount to /var/www/html/ instead of /db, you can
 use the lvrename command and re-mount to the correct directory*
 1. Check the current logical volumes
+
 ```lsblk```
+
 2. Unmount the wrong logical volume
+
 ```umount /mnt/apps-lv```
+
 3. Rename the logical volume
+
 ```lvrename /dev/webdata-vg/apps-lv /dev/webdata-vg/db-lv```
+
 4. Enable the logical volume
+
 ```lvchange -a y /dev/webdata-vg/db-lv```
+
 5. Re-mount the logical volume
+
 ```mount /dev/webdata-vg/db-lv /mnt/db```
 
+### STEP 3: Install Wordpress on your Web Server EC2 Instance
+1. Update the repository
+
+```sudo yum -y update```
+
+2. Install wget, Apache and it’s dependencies
+
+```sudo yum -y install wget httpd php php-mysqlnd php-fpm php-json```
+
+3. Start Apache
+
+```
+sudo systemctl enable httpd
+sudo systemctl start httpd
+```
+
+4. To install PHP and it’s depemdencies
+
+```
+sudo yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
+sudo yum install yum-utils http://rpms.remirepo.net/enterprise/remi-release-8.rpm
+sudo yum module list php
+sudo yum module reset php
+sudo yum module enable php:remi-7.4
+sudo yum install php php-opcache php-gd php-curl php-mysqlnd
+sudo systemctl start php-fpm
+sudo systemctl enable php-fpm
+setsebool -P httpd_execmem 1
+```
+
+5. Restart Apache
+
+```sudo systemctl restart httpd```
+
+6. Download wordpress and copy wordpress to var/www/html
+```
+mkdir wordpress
+cd wordpress
+sudo wget http://wordpress.org/latest.tar.gz
+sudo tar xzvf latest.tar.gz
+sudo rm -rf latest.tar.gz
+cp wordpress/wp-config-sample.php wordpress/wp-config.php
+cp -R wordpress /var/www/html/
+ ```
+Configure SELinux Policies
+
+  sudo chown -R apache:apache /var/www/html/wordpress
+  sudo chcon -t httpd_sys_rw_content_t /var/www/html/wordpress -R
+  sudo setsebool -P httpd_can_network_connect=1
 
 
 
