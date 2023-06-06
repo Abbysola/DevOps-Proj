@@ -3,10 +3,14 @@
 Use RedHat OS for this project
 
 ### STEP 1: Prepare a Web Server
-1. Launch an EC2 instance to serve as the web server. Create 3 volumes in the same zone as the Web Server, each of 10 gig
+1. Launch an EC2 instance to serve as the web server. Create 3 volumes in the same zone as the Web Server, each of 10 gig.
+
 2. Attach all three volumes one by one to the Web Server.
+
 3. Open the Linux terminal to begin configuration. Use the ```lsblk``` command to inspect what block devices are attached to the server. Notice the names of your newly created devices. All devices in Linux reside in /dev/directory. Inspect it with ```ls /dev/``` and make sure you see all 3 newly created block devices there – their names will be xvdf, xvdh, xvdg.
+
 4. Use ```df -h``` command to see all mounts and free space on your server.
+
 5. Use 'gdisk' utility to create a single partition on each of the 3 disks.
 
 ```sudo gdisk /dev/xvdf```
@@ -14,19 +18,26 @@ Use RedHat OS for this project
 (*Repeat this for the other disks - xvdh and xvdg*)
 
 6. Use lsblk utility to view the newly configured partition on each of the 3 disks.
+
 7. Install 'lvm2' package using ```sudo yum install lvm2```. Run ```sudo lvmdiskscan``` command to check for available partitions.
-*Note: In Ubuntu, 'apt' command is used to install packages. However, in RedHat/CentOS, a different package manager is used, so we will use 'yum' command instead.
+
+*Note: In Ubuntu, 'apt' command is used to install packages. However, in RedHat/CentOS, a different package manager is used, so we will use 'yum' command instead.*
+
 8. Use pvcreate utility to mark each of 3 disks as physical volumes (PVs) to be used by LVM.
 ```
 sudo pvcreate /dev/xvdf1
 sudo pvcreate /dev/xvdg1
 sudo pvcreate /dev/xvdh1 
 ```
+
 9. Verify that your Physical volume has been created successfully by running 
 
 ```sudo pvs```
+
 10. Use vgcreate utility to add all 3 PVs to a volume group (VG). Name the VG 'webdata-vg'.
+
 ```sudo vgcreate webdata-vg /dev/xvdh1 /dev/xvdg1 /dev/xvdf1```
+
 11. Use lvcreate utility to create 2 logical volumes. apps-lv will use half of the PV size and logs-lv Use the remaining space of the PV size. (apps-lv will be used to store data for the Website while, logs-lv will be used to store data for logs).
 ```
 sudo lvcreate -n apps-lv -L 14G webdata-vg
