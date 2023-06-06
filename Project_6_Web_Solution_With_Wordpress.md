@@ -159,7 +159,7 @@ setsebool -P httpd_execmem 1
 ```
 
 5. Restart Apache
-##
+
 ```sudo systemctl restart httpd```
 
 6. Download wordpress and copy wordpress to var/www/html
@@ -199,12 +199,17 @@ sudo systemctl enable mysqld
 Create a database and name it 'wordpress'
 ```CREATE DATABASE wordpress;```
 
-Create a username and a password.
-```CREATE USER `myuser`@`<Web-Server-Private-IP-Address>` IDENTIFIED BY 'mypass';```
+Create a username and a password of your choice. Remember to input your Web Server Private IP address in the code below before running it. You can do that on a notepad first.
+
+```
+CREATE USER `myuser`@`<Web-Server-Private-IP-Address>` IDENTIFIED BY 'mypass';
 GRANT ALL ON wordpress.* TO 'myuser'@'<Web-Server-Private-IP-Address>';
 FLUSH PRIVILEGES;
 SHOW DATABASES;
 exit
+```
+
+### STEP 6: Configure Wordpress to work with remote Database
 
 
 
