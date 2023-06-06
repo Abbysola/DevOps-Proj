@@ -54,14 +54,24 @@ The UUID of the device will be used to update the /etc/fstab file. RUn the code 
 ```sudo blkid```
 ```sudo vi /etc/fstab```
 Update /etc/fstab in the format shown below using your own UUID and rememeber to remove the leading and ending quotes.
-1. Test the configuration and reload the daemon
+22. Test the configuration and reload the daemon
 ```
 sudo mount -a
 sudo systemctl daemon-reload
 ```
-2. Verify your setup by running ```df -h```. The output must look like this:
+23. Verify your setup by running ```df -h```. The output must look like this:
 
 ### STEP 2: Prepare the Database Server
+1. Launch a second RedHat EC2 instance that will have a role – ‘DB Server’.
+2. Repeat the same steps as for the Web Server.
+3. When you get to step 11, instead of apps-lv, create db-lv logical volume.
+4. For step 15, create /db directory instead of /var/www/html/.
+5. In step 17, mount db-lv logical volume to /db.
+```sudo mount /dev/webdata-vg/db-lv /db```
+
+*Tip: Incase you made a mistake and did not use db-lv instaed of apps-lv and mount to /var/www/html/ instead of /db, you can
+use the lvrename command and re-mount to the correct directory*
+```lvrename /dev/webdata-vg/apps-lv /dev/webdata-vg/db-lv
 
 
 
