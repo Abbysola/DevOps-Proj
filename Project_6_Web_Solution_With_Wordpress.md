@@ -69,9 +69,21 @@ sudo systemctl daemon-reload
 5. In step 17, mount db-lv logical volume to /db.
 ```sudo mount /dev/webdata-vg/db-lv /db```
 
-*Tip: Incase you made a mistake and did not use db-lv instaed of apps-lv and mount to /var/www/html/ instead of /db, you can
+*Tip: Incase you make a mistake and did not use db-lv instaed of apps-lv and mount to /var/www/html/ instead of /db, you can
 use the lvrename command and re-mount to the correct directory*
-```lvrename /dev/webdata-vg/apps-lv /dev/webdata-vg/db-lv
+1. Check the current logical volumes
+```lsblk```
+2. Unmount the wrong logical volume
+```umount /mnt/apps-lv```
+3. Rename the logical volume
+```lvrename /dev/webdata-vg/apps-lv /dev/webdata-vg/db-lv```
+4. Enable the logical volume
+```lvchange -a y /dev/webdata-vg/db-lv```
+5. Re-mount the logical volume
+```mount /dev/webdata-vg/db-lv /mnt/db```
+
+
+
 
 
 
