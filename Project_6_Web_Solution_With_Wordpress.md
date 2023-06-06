@@ -194,12 +194,15 @@ sudo systemctl enable mysqld
 ```
 
 ### STEP 5: Configure DB to work with Wordpress
+1. Run the command:
+
 ```sudo mysql```
 
-Create a database and name it 'wordpress'
+2. Create a database and name it 'wordpress'
+
 ```CREATE DATABASE wordpress;```
 
-Create a username and a password of your choice. Remember to input your Web Server Private IP address in the code below before running it. You can do that on a notepad first.
+3. Create a username and a password of your choice. Remember to input your Web Server Private IP address in the code below before running it. You can do that on a notepad first.
 
 ```
 CREATE USER `myuser`@`<Web-Server-Private-IP-Address>` IDENTIFIED BY 'mypass';
@@ -210,6 +213,27 @@ exit
 ```
 
 ### STEP 6: Configure Wordpress to work with remote Database
+1. Open MySQL/Aurora port 3306 on DB Server EC2.
+
+2. Install MySQL client on the Web Server and test that you can connect from your Web Server to your DB server by using mysql-client. Remember to input your DB Server Private IP address.
+```
+sudo yum install mysql
+sudo mysql -u admin -p -h <DB-Server-Private-IP-address>
+```
+3. Verify if you can successfully execute ```SHOW DATABASES;``` command and see a list of existing databases.
+4. 
+5. Edit the wp-config.php file by adding the database name 'wordpress', username, password and DB Server Private IP address.
+
+```vi wp-config.php```
+
+Type i to edit the file, then esc key, then :wq to save and quit.
+
+5. Enable TCP port 80 in Inbound Rules configuration for your Web Server EC2 (enable from everywhere 0.0.0.0/0 or from your workstation’s IP)
+
+6. Try to access from your browser the link to your WordPress 
+
+```http://<Web-Server-Public-IP-Address>/wordpress/```
+
 
 
 
