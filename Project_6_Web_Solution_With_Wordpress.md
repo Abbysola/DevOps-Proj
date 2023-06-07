@@ -4,7 +4,7 @@ Use RedHat OS for this project
 
 ### STEP 1: Prepare a Web Server
 1. Launch an EC2 instance to serve as the web server. Create 3 volumes in the same zone as the Web Server, each of 10 gig.
-!(https://github.com/Abbysola/DevOps-Proj/blob/8e0565f09ee635f70e6592051e01f006191f935e/Images/P6_Creating%20Volume.png)
+![](https://github.com/Abbysola/DevOps-Proj/blob/8e0565f09ee635f70e6592051e01f006191f935e/Images/P6_Creating%20Volume.png)
 
 2. Attach all three volumes one by one to the Web Server.
 
