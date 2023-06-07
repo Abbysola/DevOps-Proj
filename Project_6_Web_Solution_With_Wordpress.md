@@ -231,6 +231,7 @@ exit
 
 ### STEP 6: Configure Wordpress to work with remote Database
 1. Open MySQL/Aurora port 3306 on DB Server EC2.
+![](https://github.com/Abbysola/DevOps-Proj/blob/c8f747dbbf9de754d7ca7ba36cc33d10a81f86c9/Images/Proj6_Web%20Server%20Port%203306.png)
 
 2. Install MySQL client on the Web Server and test that you can connect from your Web Server to your DB server by using mysql-client. Remember to input your DB Server Private IP address.
 ```
@@ -238,18 +239,22 @@ sudo yum install mysql
 sudo mysql -u admin -p -h <DB-Server-Private-IP-address>
 ```
 3. Verify if you can successfully execute ```SHOW DATABASES;``` command and see a list of existing databases.
-4. 
-5. Edit the wp-config.php file by adding the database name 'wordpress', username, password and DB Server Private IP address.
+
+4. Edit the wp-config.php file by adding the database name 'wordpress', username, password and DB Server Private IP address.
 
 ```vi wp-config.php```
 
 Type i to edit the file, then esc key, then :wq to save and quit.
+
+![](https://github.com/Abbysola/DevOps-Proj/blob/c8f747dbbf9de754d7ca7ba36cc33d10a81f86c9/Images/Proj6_Editing%20wp-config.png)
 
 5. Enable TCP port 80 in Inbound Rules configuration for your Web Server EC2 (enable from everywhere 0.0.0.0/0 or from your workstation’s IP)
 
 6. Try to access from your browser the link to your WordPress 
 
 ```http://<Web-Server-Public-IP-Address>/wordpress/```
+
+
 
 
 
