@@ -254,7 +254,11 @@ Type i to edit the file, then esc key, then :wq to save and quit.
 
 ```http://<Web-Server-Public-IP-Address>/wordpress/```
 
+![](https://github.com/Abbysola/DevOps-Proj/blob/b50192b3e160e5a89b29e76153056e23d351ed9e/Images/Proj6_Wordpress1.png)
 
+![](https://github.com/Abbysola/DevOps-Proj/blob/b50192b3e160e5a89b29e76153056e23d351ed9e/Images/Proj6_Wordpress2.png)
+
+![](https://github.com/Abbysola/DevOps-Proj/blob/b50192b3e160e5a89b29e76153056e23d351ed9e/Images/Proj6_Wordpress3.png)
 
 
 
