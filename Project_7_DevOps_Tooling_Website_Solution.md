@@ -5,3 +5,6 @@
 1. Storage Server: Red Hat Enterprise Linux 8 + NFS Server
 1. Programming Language: PHP
 1. Code Repository: GitHub
+
+Adding the AMI;
+
