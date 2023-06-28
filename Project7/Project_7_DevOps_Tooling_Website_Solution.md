@@ -36,13 +36,30 @@ Mount lv-apps on /mnt/apps – To be used by webservers
 Mount lv-logs on /mnt/logs – To be used by webserver logs
 Mount lv-opt on /mnt/opt – To be used by Jenkins server later
 
-d. Install NFS server. It should be configured to start on reboot and should be up and running.
+4. Install NFS server. It should be configured to start on reboot and should be up and running.
 
+```
 sudo yum -y update
 sudo yum install nfs-utils -y
 sudo systemctl start nfs-server.service
 sudo systemctl enable nfs-server.service
 sudo systemctl status nfs-server.service
+```
 
+***Image
+
+5.Make sure we set up permission that will allow our Web servers to read, write and execute files on NFS:
+
+```
+sudo chown -R nobody: /mnt/apps
+sudo chown -R nobody: /mnt/logs
+sudo chown -R nobody: /mnt/opt
+
+sudo chmod -R 777 /mnt/apps
+sudo chmod -R 777 /mnt/logs
+sudo chmod -R 777 /mnt/opt
+```
+
+Restart NFS Server ```sudo systemctl restart nfs-server.service```
 
 
