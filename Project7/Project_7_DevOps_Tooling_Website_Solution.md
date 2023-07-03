@@ -108,7 +108,83 @@ sudo mysql
 
 ## Prepare the Web Servers
 
-Create a RHEL EC2 instance on AWS which serves as our web server. Also remember to have in it in same subnet
+Create a RHEL EC2 instance on AWS which serves as our web server. Also remember to have in it in same subnet. In addition, open TCP Port 80 on the web server.
+
+The following will be done on the web servers:
+
+-Configure NFS client
+-Deploy a Tooling application to our Web Servers into a shared NFS folder
+-Configure the Web Servers to work with a single MySQL database
+
+1. Launch a new EC2 instance with RHEL 8 Operating System
+2. Install NFS client
+   ```sudo yum install nfs-utils nfs4-acl-tools -y```
+
+3. Mount /var/www/ and target the NFS server’s export for apps
+```
+sudo mkdir /var/www
+sudo mount -t nfs -o rw,nosuid <NFS-Server-Private-IP-Address>:/mnt/apps /var/www
+```
+
+4. Verify that NFS was mounted successfully;
+```df -h```
+
+Make sure that the changes will persist on Web Server after reboot;
+```sudo vi /etc/fstab```
+
+add the line below (Insert the NFS server Private IP address);
+```<NFS-Server-Private-IP-Address>:/mnt/apps /var/www nfs defaults 0 0```
+
+5. Install Remi’s repository, Apache and PHP
+```
+sudo yum install httpd -y
+
+sudo dnf install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
+
+sudo dnf install dnf-utils http://rpms.remirepo.net/enterprise/remi-release-8.rpm
+
+sudo dnf module reset php
+
+sudo dnf module enable php:remi-7.4
+
+sudo dnf install php php-opcache php-gd php-curl php-mysqlnd
+
+sudo systemctl start php-fpm
+
+sudo systemctl enable php-fpm
+
+setsebool -P httpd_execmem 1
+```
+
+6. Verify that Apache files and directories are available on the Web Server in /var/www and also on the NFS server in /mnt/apps. To do this, create a new file on one server and check for the file on the other server;
+
+```touch test.txt```
+
+If you see the same files – it means NFS is mounted correctly. 
+
+7. Locate the log folder for Apache on the Web Server and mount it to NFS server’s export for logs.
+
+Repeat step 4 to make sure the mount point will persist after reboot.
+
+8. Fork the tooling source code from Darey.io Github Account to your Github account. )
+Deploy the tooling website’s code to the Webserver. Ensure that the html folder from the repository is deployed to /var/www/html
+
+Note: If you encounter 403 Error – check permissions to your /var/www/html folder and also disable SELinux sudo setenforce 0
+To make this change permanent – open following config file sudo vi /etc/sysconfig/selinux and set SELINUX=disabledthen restrt httpd.
+
+9. Update the website’s configuration to connect to the database (in /var/www/html/functions.php file). Apply tooling-db.sql script to your database using this command
+
+```mysql -h <databse-private-ip> -u <db-username> -p <db-pasword> < tooling-db.sql```
+
+10. Create in MySQL a new admin user with username: myuser and password: password:
+    
+```
+INSERT INTO ‘users’ (‘id’, ‘username’, ‘password’, ’email’, ‘user_type’, ‘status’) VALUES
+-> (1, ‘myuser’, ‘5f4dcc3b5aa765d61d8327deb882cf99’, ‘user@mail.com’, ‘admin’, ‘1’);
+```
+
+Open the website in your browser http://<Web-Server-Public-IP-Address-or-Public-DNS-Name>/index.php and make sure you can login into the website with myuser user.
+
 
 
 
