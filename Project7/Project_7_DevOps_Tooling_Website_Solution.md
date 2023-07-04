@@ -12,20 +12,24 @@ Note: For this project, all the web servers will be created in the same subnet.
 
 ### Adding the AMI;
 
-***Image
+![adding_amis](https://github.com/Abbysola/DevOps-Proj/blob/main/Project7/Images/1.AMIs.png)
+
+![public_images](https://github.com/Abbysola/DevOps-Proj/blob/main/Project7/Images/2.Public_Images.png)
+
+![launch_rhel_instance](https://github.com/Abbysola/DevOps-Proj/blob/main/Project7/Images/3.Finding_RHEL.png)
 
 ## Architectural Design
 
 The diagram below shows a common pattern where several stateless Web Servers share a common database and also access the same files using Network File Sytem (NFS) as a shared file storage. Even though the NFS server might be located on a completely separate hardware – for Web Servers, it look like a local file system from where they can serve the same files.
 
-***Image
+![architecture](https://github.com/Abbysola/DevOps-Proj/blob/main/Project7/Images/4.3-tier_Architecture.png)
 
 ## Prepare the NFS Server
 
 1. Create an EC2 instance with RHEL Linux 8 Operating System.
-***Image
+![launch_instance](https://github.com/Abbysola/DevOps-Proj/blob/main/Project7/Images/5.Launch_Instance.png)
 
-2. Configure 3 Logical Volumes on the Server. You can refer to ***Insert link*** to learn about how to create Logical volumes and Volume Groups.
+2. Configure 3 Logical Volumes on the Server. You can refer to https://github.com/Abbysola/DevOps-Proj/blob/main/Project_6_Web_Solution_With_Wordpress.md to learn about how to create Logical volumes and Volume Groups.
 
 Note that:
 
@@ -38,6 +42,8 @@ Mount lv-apps on /mnt/apps – To be used by webservers
 Mount lv-logs on /mnt/logs – To be used by webserver logs
 Mount lv-opt on /mnt/opt – To be used by Jenkins server later
 
+![creating_lvs_and_vgs](https://github.com/Abbysola/DevOps-Proj/blob/main/Project7/Images/6.LVs_and_VGs.png)
+
 4. Install NFS server. It should be configured to start on reboot and should be up and running.
 
 ```
@@ -48,7 +54,7 @@ sudo systemctl enable nfs-server.service
 sudo systemctl status nfs-server.service
 ```
 
-***Image
+![nfs_server_status](https://github.com/Abbysola/DevOps-Proj/blob/main/Project7/Images/7.NFS_Server_Running.png)
 
 5.Make sure we set up permission that will allow our Web servers to read, write and execute files on NFS:
 
@@ -62,13 +68,15 @@ sudo chmod -R 777 /mnt/logs
 sudo chmod -R 777 /mnt/opt
 ```
 
+![setting-permissions](https://github.com/Abbysola/DevOps-Proj/blob/main/Project7/Images/8.Setting_Permissions.png)
+
 Restart NFS Server ```sudo systemctl restart nfs-server.service```
 
 Configure access to NFS for clients within the same subnet. Export the mounts for webservers’ subnet cidr to connect as clients. As said earlier, all three Web Servers are created inside the same subnet, but in production set up, it is best to separate each tier inside its own subnet for higher level of security.
 
 To check your subnet cidr, open your EC2 instance in AWS web console and locate ‘Networking’ tab and open a Subnet link.
 
-***Image
+![subnet](https://github.com/Abbysola/DevOps-Proj/blob/main/Project7/Images/9.Subnet_link.png)
 
 ```sudo vi /etc/exports```
 
@@ -85,6 +93,8 @@ sudo exportfs -arv
 
 6. Check which port is used by NFS and open it using Security Groups (add new Inbound Rule)
 ```rpcinfo -p | grep nfs```
+
+![see_info_on_ports](https://github.com/Abbysola/DevOps-Proj/blob/main/Project7/Images/11.Info_on_req_ports.png)
 
 Note: In order for NFS server to be accessible from your client, you must also open following ports: TCP 111, UDP 111, UDP 2049
 
@@ -104,7 +114,7 @@ sudo mysql
 3. Create a database user and name it webaccess
 4. Grant permission to webaccess user on tooling database to do anything only from the webservers subnet cidr
 
-***Image
+![sql_database](https://github.com/Abbysola/DevOps-Proj/blob/main/Project7/Images/10.Creating_SQL_Databases.png)
 
 ## Prepare the Web Servers
 
@@ -129,11 +139,15 @@ sudo mount -t nfs -o rw,nosuid <NFS-Server-Private-IP-Address>:/mnt/apps /var/ww
 4. Verify that NFS was mounted successfully;
 ```df -h```
 
+![mount_apps](https://github.com/Abbysola/DevOps-Proj/blob/main/Project7/Images/12.Mounting_apps_on_var%3Awww.png)
+
 Make sure that the changes will persist on Web Server after reboot;
 ```sudo vi /etc/fstab```
 
 add the line below (Insert the NFS server Private IP address);
 ```<NFS-Server-Private-IP-Address>:/mnt/apps /var/www nfs defaults 0 0```
+
+![adding_private_ip](https://github.com/Abbysola/DevOps-Proj/blob/main/Project7/Images/13.Add_PrivateIP_to_etcfstab.png)
 
 5. Install Remi’s repository, Apache and PHP
 ```
@@ -160,32 +174,85 @@ setsebool -P httpd_execmem 1
 
 ```touch test.txt```
 
+![creating_test_file](https://github.com/Abbysola/DevOps-Proj/blob/main/Project7/Images/14.Creating_test_file_on_webserver.png)
+
 If you see the same files – it means NFS is mounted correctly. 
+
+![checking_test_file](https://github.com/Abbysola/DevOps-Proj/blob/main/Project7/Images/15.Checking_test_file_on_NFS.png)
 
 7. Locate the log folder for Apache on the Web Server and mount it to NFS server’s export for logs.
 
+![locating_log_folder](https://github.com/Abbysola/DevOps-Proj/blob/main/Project7/Images/16.Test.txt_n_Webserverloghttpd.png)
+
 Repeat step 4 to make sure the mount point will persist after reboot.
 
-8. Fork the tooling source code from Darey.io Github Account to your Github account. )
+![mounting_logs](https://github.com/Abbysola/DevOps-Proj/blob/main/Project7/Images/17.Mounting_logs_on_httpd.png)
+
+![editing_httpd_file](https://github.com/Abbysola/DevOps-Proj/blob/main/Project7/Images/18.Editin_etc%3Afstab_for_logs.png)
+
+8. Fork the tooling source code from Darey.io Github Account to your Github account. This is the source code used in this project.
 Deploy the tooling website’s code to the Webserver. Ensure that the html folder from the repository is deployed to /var/www/html
+![forking_the_source_code_to_be_used](https://github.com/Abbysola/DevOps-Proj/blob/main/Project7/Images/19.Cloning_the_folder_from_git.png)
+
+Check for the html folder in both the respository and in /var/www/html. The html folder in /var/www/html is currently empty.
+![checking_the_files](https://github.com/Abbysola/DevOps-Proj/blob/main/Project7/Images/20.Check_files_in_tooling.png)
+
+![checking_the_files](https://github.com/Abbysola/DevOps-Proj/blob/main/Project7/Images/21.Check_files_in_%3Avar%3Awww.png)
+
+Deploy the content of the html folder in the repository into /var/www/html
+![copying_the_folder_content](https://github.com/Abbysola/DevOps-Proj/blob/main/Project7/Images/22.Copying_the_files.png)
 
 Note: If you encounter 403 Error – check permissions to your /var/www/html folder and also disable SELinux sudo setenforce 0
 To make this change permanent – open following config file sudo vi /etc/sysconfig/selinux and set SELINUX=disabledthen restrt httpd.
 
-9. Update the website’s configuration to connect to the database (in /var/www/html/functions.php file). Apply tooling-db.sql script to your database using this command
+![disabling_selinux](https://github.com/Abbysola/DevOps-Proj/blob/main/Project7/Images/23.Disabling_sentenforce.png)
+
+9. Update the website’s configuration to connect to the database (in /var/www/html/functions.php file).
+
+![updating_db_configuration](https://github.com/Abbysola/DevOps-Proj/blob/main/Project7/Images/24.Editing_db_credentials.png)
+
+Change mysql bind address from this:
+
+![changing_mysql_value](https://github.com/Abbysola/DevOps-Proj/blob/main/Project7/Images/25.Changing_sql_value_for_db.png)
+
+to this:
+
+![changed_mysql_value](https://github.com/Abbysola/DevOps-Proj/blob/main/Project7/Images/26.Changed_SQL_value_for_db.png)
+
+Restart mysql
+
+![restart_mysql](https://github.com/Abbysola/DevOps-Proj/blob/main/Project7/Images/27.Restarting_mysql_on_db.png)
+
+Add mysl security group on db
+
+![adding_mysql_security_group](https://github.com/Abbysola/DevOps-Proj/blob/main/Project7/Images/28.Security_group_for_mysql_on_db.png)
+
+Apply tooling-db.sql script to your database using this command
 
 ```mysql -h <databse-private-ip> -u <db-username> -p <db-pasword> < tooling-db.sql```
 
-10. Create in MySQL a new admin user with username: myuser and password: password:
+![apply_tooling-db_script](https://github.com/Abbysola/DevOps-Proj/blob/main/Project7/Images/29.Applying_tooling.db_script.png)
+
+10. Create in MySQL a new admin user with username: myuser and password: password
+
+Check users on tooling db
+
+![check_users](https://github.com/Abbysola/DevOps-Proj/blob/main/Project7/Images/30.Checking_sql_in_db.png)
+
+Creating the new admin user
     
 ```
 INSERT INTO ‘users’ (‘id’, ‘username’, ‘password’, ’email’, ‘user_type’, ‘status’) VALUES
 -> (1, ‘myuser’, ‘5f4dcc3b5aa765d61d8327deb882cf99’, ‘user@mail.com’, ‘admin’, ‘1’);
 ```
 
-Open the website in your browser http://<Web-Server-Public-IP-Address-or-Public-DNS-Name>/index.php and make sure you can login into the website with myuser
+![creating_user](https://github.com/Abbysola/DevOps-Proj/blob/main/Project7/Images/34.Creating_a_user.png)
 
+Open the website in your browser http://<Web-Server-Public-IP-Address-or-Public-DNS-Name>/index.php and make sure you can login into the website with myuser user.
 
+![landing_page](https://github.com/Abbysola/DevOps-Proj/blob/main/Project7/Images/32.Landing_page.png)
+
+![admin_home_page](https://github.com/Abbysola/DevOps-Proj/blob/main/Project7/Images/35.Admin_home_page.png)
 
 
 
