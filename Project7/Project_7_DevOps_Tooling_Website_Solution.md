@@ -44,7 +44,7 @@ Mount lv-opt on /mnt/opt – To be used by Jenkins server later
 
 ![creating_lvs_and_vgs](https://github.com/Abbysola/DevOps-Proj/blob/main/Project7/Images/6.LVs_and_VGs.png)
 
-4. Install NFS server. It should be configured to start on reboot and should be up and running.
+3. Install NFS server. It should be configured to start on reboot and should be up and running.
 
 ```
 sudo yum -y update
@@ -56,7 +56,7 @@ sudo systemctl status nfs-server.service
 
 ![nfs_server_status](https://github.com/Abbysola/DevOps-Proj/blob/main/Project7/Images/7.NFS_Server_Running.png)
 
-5.Make sure we set up permission that will allow our Web servers to read, write and execute files on NFS:
+4. Make sure we set up permission that will allow our Web servers to read, write and execute files on NFS:
 
 ```
 sudo chown -R nobody: /mnt/apps
@@ -87,11 +87,10 @@ Insert the lines below (dont forget to replace with the Subnet CIDR):
 /mnt/logs <Subnet-CIDR>(rw,sync,no_all_squash,no_root_squash)
 /mnt/opt <Subnet-CIDR>(rw,sync,no_all_squash,no_root_squash)
 ```
-***Image
 
 sudo exportfs -arv
 
-6. Check which port is used by NFS and open it using Security Groups (add new Inbound Rule)
+5. Check which port is used by NFS and open it using Security Groups (add new Inbound Rule)
 ```rpcinfo -p | grep nfs```
 
 ![see_info_on_ports](https://github.com/Abbysola/DevOps-Proj/blob/main/Project7/Images/11.Info_on_req_ports.png)
@@ -122,10 +121,11 @@ Create a RHEL EC2 instance on AWS which serves as our web server. Also remember 
 
 The following will be done on the web servers:
 
--Configure NFS client
--Deploy a Tooling application to our Web Servers into a shared NFS folder
--Configure the Web Servers to work with a single MySQL database
+1. Configure NFS client
+2. Deploy a Tooling application to our Web Servers into a shared NFS folder
+3. Configure the Web Servers to work with a single MySQL database
 
+### Steps
 1. Launch a new EC2 instance with RHEL 8 Operating System
 2. Install NFS client
    ```sudo yum install nfs-utils nfs4-acl-tools -y```
