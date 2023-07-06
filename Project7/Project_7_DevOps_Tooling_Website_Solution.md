@@ -8,7 +8,7 @@
 1. Programming Language: PHP
 1. Code Repository: GitHub
 
-Note: For this project, all the web servers will be created in the same subnet. For RHEL 8 server, use RHEL-8.6.0_HVM-20220503-x86_64-2-Hourly2-GP2 (ami-035c5dc086849b5de).
+Note: For this project, all the web servers will be created in the same subnet. For RHEL 8 server, use RHEL-8.6.0_HVM-20220503-x86_64-2-Hourly2-GP2.
 
 ### Adding the AMI;
 
