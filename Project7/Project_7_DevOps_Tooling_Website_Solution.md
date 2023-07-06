@@ -234,7 +234,7 @@ To make this change permanent – open following config file
 
 ```sudo vi /etc/sysconfig/selinux``` and set SELINUX=disabled then restart httpd.
 
-![disabling_selinux]https://github.com/Abbysola/DevOps-Proj/blob/main/Project7/Images/36.Selinux_disabled.png
+![disabling_selinux](https://github.com/Abbysola/DevOps-Proj/blob/main/Project7/Images/36.Selinux_disabled.png)
 
 ![disabling_selinux_2](https://github.com/Abbysola/DevOps-Proj/blob/main/Project7/Images/23.Disabling_sentenforce.png)
 
