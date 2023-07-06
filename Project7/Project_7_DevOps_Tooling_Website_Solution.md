@@ -145,7 +145,6 @@ Make sure that the changes will persist on Web Server after reboot;
 ```sudo vi /etc/fstab```
 
 add the line below (Insert the NFS server Private IP address);
-```<NFS-Server-Private-IP-Address>:/mnt/apps /var/www nfs defaults 0 0```
 
 ![adding_private_ip](https://github.com/Abbysola/DevOps-Proj/blob/main/Project7/Images/13.Add_PrivateIP_to_etcfstab.png)
 
@@ -184,24 +183,56 @@ If you see the same files – it means NFS is mounted correctly.
 
 Repeat step 4 to make sure the mount point will persist after reboot.
 
+```sudo mount -t nfs -o rw,nosuid <NFS-Server-Private-IP-Address>:/mnt/logs /var/log/httpd```
+
 ![mounting_logs](https://github.com/Abbysola/DevOps-Proj/blob/main/Project7/Images/17.Mounting_logs_on_httpd.png)
+
+```sudo vi /etc/fstab```
+
+Add the line below:
+
+```<NFS-Server-Private-IP-Address>:/mnt/logs /var/log/httpd nfs defaults 0 0```
 
 ![editing_httpd_file](https://github.com/Abbysola/DevOps-Proj/blob/main/Project7/Images/18.Editin_etc%3Afstab_for_logs.png)
 
 8. Fork the tooling source code from Darey.io Github Account to your Github account. This is the source code used in this project.
 Deploy the tooling website’s code to the Webserver. Ensure that the html folder from the repository is deployed to /var/www/html
+
+Initialize git repository
+
+Install git with ```sudo yum install git``` if it's not yet installed
+
+```git init```
+
+```git clone <tooling-webside-code-url```
+
+(In this case, our tooling code is located at https://github.com/darey-io/tooling.git)
+ 
 ![forking_the_source_code_to_be_used](https://github.com/Abbysola/DevOps-Proj/blob/main/Project7/Images/19.Cloning_the_folder_from_git.png)
 
 Check for the html folder in both the respository and in /var/www/html. The html folder in /var/www/html is currently empty.
+
+```cd tooling/```
+
+```ls```
+
 ![checking_the_files](https://github.com/Abbysola/DevOps-Proj/blob/main/Project7/Images/20.Check_files_in_tooling.png)
 
 ![checking_the_files](https://github.com/Abbysola/DevOps-Proj/blob/main/Project7/Images/21.Check_files_in_%3Avar%3Awww.png)
 
 Deploy the content of the html folder in the repository into /var/www/html
+
+```sudo cp -R html/. /var/www/html```
+
 ![copying_the_folder_content](https://github.com/Abbysola/DevOps-Proj/blob/main/Project7/Images/22.Copying_the_files.png)
 
-Note: If you encounter 403 Error – check permissions to your /var/www/html folder and also disable SELinux sudo setenforce 0
-To make this change permanent – open following config file sudo vi /etc/sysconfig/selinux and set SELINUX=disabledthen restrt httpd.
+Note: If you encounter 403 Error – check permissions to your /var/www/html folder and also disable SELinux 
+
+```sudo setenforce 0```
+
+To make this change permanent – open following config file 
+
+```sudo vi /etc/sysconfig/selinux``` and set SELINUX=disabled then restart httpd.
 
 ![disabling_selinux](https://github.com/Abbysola/DevOps-Proj/blob/main/Project7/Images/23.Disabling_sentenforce.png)
 
