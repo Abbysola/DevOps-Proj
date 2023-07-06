@@ -172,8 +172,6 @@ sudo setsebool -P httpd_execmem 1
 
 6. Verify that Apache files and directories are available on the Web Server in /var/www and also on the NFS server in /mnt/apps. To do this, create a new file on one server and check for the file on the other server;
 
-```touch test.txt```
-
 ![creating_test_file](https://github.com/Abbysola/DevOps-Proj/blob/main/Project7/Images/14.Creating_test_file_on_webserver.png)
 
 If you see the same files – it means NFS is mounted correctly. 
