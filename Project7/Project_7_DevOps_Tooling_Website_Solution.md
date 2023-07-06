@@ -236,19 +236,27 @@ To make this change permanent – open following config file
 
 ![disabling_selinux](https://github.com/Abbysola/DevOps-Proj/blob/main/Project7/Images/23.Disabling_sentenforce.png)
 
-9. Update the website’s configuration to connect to the database (in /var/www/html/functions.php file).
+9. Update the website’s configuration with the db server credentials to connect to the database (in /var/www/html/functions.php file).
+
+```sudo vi /var/www/html/functions.php```
 
 ![updating_db_configuration](https://github.com/Abbysola/DevOps-Proj/blob/main/Project7/Images/24.Editing_db_credentials.png)
 
-Change mysql bind address from this:
+Change mysql bind address by running 
+
+```sudo vi /etc/mysql/mysql.conf.d/mysqld.cnf```
 
 ![changing_mysql_value](https://github.com/Abbysola/DevOps-Proj/blob/main/Project7/Images/25.Changing_sql_value_for_db.png)
-
-to this:
 
 ![changed_mysql_value](https://github.com/Abbysola/DevOps-Proj/blob/main/Project7/Images/26.Changed_SQL_value_for_db.png)
 
 Restart mysql
+
+```sudo systemctl restart mysql```
+
+Check mysql status
+
+```sudo systemctl status mysql```
 
 ![restart_mysql](https://github.com/Abbysola/DevOps-Proj/blob/main/Project7/Images/27.Restarting_mysql_on_db.png)
 
@@ -277,7 +285,7 @@ INSERT INTO ‘users’ (‘id’, ‘username’, ‘password’, ’email’, 
 
 ![creating_user](https://github.com/Abbysola/DevOps-Proj/blob/main/Project7/Images/34.Creating_a_user.png)
 
-Open the website in your browser http://<Web-Server-Public-IP-Address-or-Public-DNS-Name>/index.php and make sure you can login into the website with myuser user.
+Open the website in your browser http://<Web-Server-Public-IP-Address-or-Public-DNS-Name>/index.php and make sure you can login into the website with 'myuser' user.
 
 ![landing_page](https://github.com/Abbysola/DevOps-Proj/blob/main/Project7/Images/32.Landing_page.png)
 
