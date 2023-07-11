@@ -10,7 +10,7 @@ In this project, my Tooling Website solution will be enhanced using a Load Balan
 
 ### Architecture
 
-![Architecture]()
+![Architecture](https://github.com/Abbysola/DevOps-Proj/blob/main/Project8/Images/1.Architecture.png)
 
 ### Prerequisites
 
@@ -20,17 +20,17 @@ The following servers must be installed and configured already (see Project 7 (h
 1. One MySQL DB Server (based on Ubuntu 20.04)
 1. One RHEL8 NFS server
 
-![Prerequisite_Architecture]()
+![Prerequisite_Architecture](https://github.com/Abbysola/DevOps-Proj/blob/main/Project8/Images/2.Prerequisite_architecture.png)
 
 ### Configure Apache As A Load Balancer
 
 1. Create an Ubuntu Server 20.04 EC2 instance and name it Project-8-apache-lb.
 
-![EC2_Instance_List]()
+![EC2_Instance_List](https://github.com/Abbysola/DevOps-Proj/blob/main/Project8/Images/3.EC2_Instance_list.png)
 
 2. Open TCP port 80 on Project-8-apache-lb by creating an Inbound Rule in Security Group.
 
-![TCP_Port80_for_LB]()
+![TCP_Port80_for_LB](https://github.com/Abbysola/DevOps-Proj/blob/main/Project8/Images/4.TCP_Port_80.png)
 
 3. Install Apache Load Balancer on Project-8-apache-lb server and configure it to point traffic coming to LB to both Web Servers.
 
@@ -75,7 +75,7 @@ Configure load balancing
         ProxyPassReverse / balancer://mycluster/
 ```
 
-![Load_Balancing_configuration]()
+![Load_Balancing_configuration](https://github.com/Abbysola/DevOps-Proj/blob/main/Project8/Images/5.Load_Balancer_configuration.png)
 
 Restart apache server
 ```sudo systemctl restart apache2```
@@ -83,7 +83,7 @@ Restart apache server
 Confirm that it is active
 ```sudo systemctl status apache2```
 
-![Apache_Status]()
+![Apache_Status](https://github.com/Abbysola/DevOps-Proj/blob/main/Project8/Images/6.Apache_restart.png)
 
 Here, 'bytraffic' balancing method will distribute incoming load between your Web Servers according to current traffic load. We can control in which proportion the traffic must be distributed by the loadfactor parameter.
 
@@ -91,14 +91,15 @@ There are other methods that can be used as well: bybusyness, byrequests, heartb
 
 To verify that my configuration works, i'll try to access my Load Balancer’s Public IP address or Public DNS name from my browser.
 
-http://<Load-Balancer-Public-IP-Address-or-Public-DNS-Name>/index.php
+http://Load-Balancer-Public-IP-Address-or-Public-DNS-Name/index.php
 
+![LB_webpage](https://github.com/Abbysola/DevOps-Proj/blob/main/Project8/Images/7.LB_web_page.png)
 
 Note: If in the Project-7 you mounted /var/log/httpd/ from your Web Servers to the NFS server – unmount them and make sure that each Web Server has its own log directory.
 
 Open two ssh/Putty consoles for both Web Servers and run following command:
 
 sudo tail -f /var/log/httpd/access_log
-Try to refresh your browser page http://<Load-Balancer-Public-IP-Address-or-Public-DNS-Name>/index.php several times and make sure that both servers receive HTTP GET requests from your LB – new records must appear in each server’s log file. The number of requests to each server will be approximately the same since we set loadfactor to the same value for both servers – it means that traffic will be disctributed evenly between them.
+Try to refresh your browser page http://Load-Balancer-Public-IP-Address-or-Public-DNS-Name/index.php several times and make sure that both servers receive HTTP GET requests from your LB – new records must appear in each server’s log file. The number of requests to each server will be approximately the same since we set loadfactor to the same value for both servers – it means that traffic will be disctributed evenly between them.
 
 

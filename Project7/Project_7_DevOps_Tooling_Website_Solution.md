@@ -287,7 +287,7 @@ INSERT INTO ‘users’ (‘id’, ‘username’, ‘password’, ’email’, 
 
 ![creating_user](https://github.com/Abbysola/DevOps-Proj/blob/main/Project7/Images/34.Creating_a_user.png)
 
-Open the website in your browser http://<Web-Server-Public-IP-Address-or-Public-DNS-Name>/index.php and make sure you can login into the website with 'myuser' user.
+Open the website in your browser http://Web-Server-Public-IP-Address-or-Public-DNS-Name/index.php and make sure you can login into the website with 'myuser' user.
 
 ![landing_page](https://github.com/Abbysola/DevOps-Proj/blob/main/Project7/Images/32.Landing_page.png)
 
