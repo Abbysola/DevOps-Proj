@@ -95,11 +95,6 @@ http://Load-Balancer-Public-IP-Address-or-Public-DNS-Name/index.php
 
 ![LB_webpage](https://github.com/Abbysola/DevOps-Proj/blob/main/Project8/Images/7.LB_web_page.png)
 
-Note: If in the Project-7 you mounted /var/log/httpd/ from your Web Servers to the NFS server – unmount them and make sure that each Web Server has its own log directory.
 
-Open two ssh/Putty consoles for both Web Servers and run following command:
-
-sudo tail -f /var/log/httpd/access_log
-Try to refresh your browser page http://Load-Balancer-Public-IP-Address-or-Public-DNS-Name/index.php several times and make sure that both servers receive HTTP GET requests from your LB – new records must appear in each server’s log file. The number of requests to each server will be approximately the same since we set loadfactor to the same value for both servers – it means that traffic will be disctributed evenly between them.
 
 
