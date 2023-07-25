@@ -106,7 +106,86 @@ Configure the Jenkins freestyle job. Provide the link to the GitHub repository a
 Save the configuration. 
 
 ## Configuring the build manually
-1. Click “Build Now” button. If you have configured everything correctly, the build will be successfull and you will see it under #1
+Click “Build Now” button. If you have configured everything correctly, the build will be successfull and you will see it under #1
+
+![Configured_build]()
+
+You can open the build and check in “Console Output” to see that it has run successfully. This is a Jenkins build that was configured manually. Howevere, this build does not produce anything because it is manually configured.
+
+## Configuring Build Triggers
+
+1. Click “Configure” your job/project and add these two configurations
+
+a. Configure triggering the job from GitHub webhook:
+
+
+b. Configure “Post-build Actions” to archive all the files. Files resulted from a build are called “artifacts”.
+
+2. Make any change to any file in your GitHub repository (e.g. README.MD file) and push the changes to the master branch.
+
+You will see that a new build has been launched automatically (by webhook) and you can see its results (artifacts), saved on Jenkins server.
+
+Now, an automated Jenkins job that receives files from GitHub by webhook trigger has been configured. This method is known as ‘push’ and the files transfer is initiated by GitHub. 
+
+Other methods used include trigger one job (downstreadm) from another (upstream), poll GitHub periodically etc.
+
+By default, the artifacts are stored on Jenkins server locally. You can check them here:
+
+```ls /var/lib/jenkins/jobs/tooling_github/builds/<build_number>/archive/```
+
+## Configure Jenkins to Copy Files to NFS Server via SSH
+
+The artifacts are now saved locally on the Jenkins server. Here, we would copy them to our NFS server (/mnt/apps) directory.
+
+To do this, a plugin called “Publish Over SSH” will be used.
+
+1. Install “Publish Over SSH” plugin.
+
+On the main Jenkins dashboard, select “Manage Jenkins” and choose “Manage Plugins” menu item.
+
+On “Available” tab, search for “Publish Over SSH” plugin and install it.
+
+2. Configure the job/project to copy artifacts over to NFS server.
+
+On main dashboard, select “Manage Jenkins” and choose “Configure System” menu item.
+
+Scroll down to 'Publish over SSH' plugin configuration section and configure it to be able to connect to your NFS server.
+
+a. Provide a private key (content of .pem file that you use to connect to NFS server via SSH/Putty). To copy the file, navigate to your .pem file directory.
+
+```cd /path/to/pem-file-directory/```
+
+Use the 'cat' command to view the contents of the .pem file.
+
+```cat file.pem```
+
+b. Hostname – can be private IP address of your NFS server
+
+c. Username – ec2-user (since NFS server is based on EC2 with RHEL 8)
+
+d. Remote directory – /mnt/apps since your Web Servers use it as a mointing point to retrieve files from the NFS server. 
+
+You can test the configuration and make sure it is successful. Note that TCP port 22 on NFS server must be open to receive SSH connections.
+
+e. Save the configuration 
+
+3. Open your Jenkins job/project configuration page and add another “Post-build Action”.
+
+4. Configure it to send all files from the build into the previously defined remote directory. Here, all files and directories will be copied using **.
+
+5. Save the configuration.
+
+6. Make a change in the README.MD file in your GitHub Tooling repository.
+
+Webhook will trigger a new job and in the “Console Output” of the job, there would be a success maessage at the bottom.
+
+7. To make sure that the files in /mnt/apps have been updated, connect via SSH/Putty to your NFS server and check README.MD file
+
+```cat /mnt/apps/README.md```
+
+If the changes previously made in your README.MD file reflects, it shows that the job works as expected.
+
+
 
 
 
