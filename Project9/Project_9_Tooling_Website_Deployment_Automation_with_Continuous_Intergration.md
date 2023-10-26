@@ -12,7 +12,7 @@ In this project, I will utilize Jenkins CI capabilities to make sure that every 
 
 ### Here is how the updated architecture will look like upon competition of this project:
 
-![Architecture]()   `
+![https://github.com/Abbysola/DevOps-Proj/blob/62dd732f890f5a75ef3fc5b0ded62063842badc6/Project9/Images/1.Architecture.png]()   `
 
 ## Install and Configure Jenkins Server
 
