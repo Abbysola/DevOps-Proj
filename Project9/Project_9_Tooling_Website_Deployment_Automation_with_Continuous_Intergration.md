@@ -118,6 +118,7 @@ You can open the build and check in “Console Output” to see that it has run 
 
 a. Configure triggering the job from GitHub webhook:
 
+≈z
 
 b. Configure “Post-build Actions” to archive all the files. Files resulted from a build are called “artifacts”.
 

@@ -1,5 +1,21 @@
 # Load Balancer Solution with NGINX and SSL
 
+When data is being transferred between a client (browser) and a Web Server over the Internet, it passes through multiple network devices and can be easily intercepted and compromised by cybercriminals if the data is not encrypted. This type of information security threat is called Man-In-The-Middle (MIMT) attack.
+
+To avoid this, SSL and its newer version, TSL – is a security technology that protects connection from these attacks by creating an encrypted session between client and Web server. 
+
+SSL/TLS uses digital certificates to identify and validate a Website. A browser reads the certificate issued by a Certificate Authority (CA) to make sure that the website is registered in the CA so it can be trusted to establish a secured connection.
+
+
+In this project, we will:
+1. configure an NGINX Balancer solution
+1. register a new domain name and configure secured connection using SSL/TLS certificates
+
+Here is what our target architecture looks like:
+![Architecture]()
+
+
+
 #Open this file on your LB server
 
 sudo vi /etc/hosts
