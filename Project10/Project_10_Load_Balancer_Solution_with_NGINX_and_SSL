@@ -12,13 +12,13 @@ In this project, we will:
 1. register a new domain name and configure secured connection using SSL/TLS certificates
 
 Here is what our target architecture looks like:
-![Architecture]()
+![Architecture](https://github.com/Abbysola/DevOps-Proj/blob/main/Project10/Images/1.Architecture.png)
 
 # Configure NGINX as a load balancer
 
 1. Create an EC2 VM based on Ubuntu Server 20.04 LTS and name it Nginx_LB. Open TCP port 80 for HTTP connections and TCP port 443 for secured HTTPS connections.
 
-![Nginx_LB]()
+![Nginx_LB](https://github.com/Abbysola/DevOps-Proj/blob/main/Project10/Images/2.Nginx_LB.png)
 
 ![Opening ports]()
 
