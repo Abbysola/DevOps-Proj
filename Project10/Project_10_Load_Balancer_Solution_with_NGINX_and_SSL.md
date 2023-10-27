@@ -20,11 +20,11 @@ Here is what our target architecture looks like:
 
 ![Nginx_LB](https://github.com/Abbysola/DevOps-Proj/blob/main/Project10/Images/2.Nginx_LB.png)
 
-![Opening ports]()
+![Opening ports](https://github.com/Abbysola/DevOps-Proj/blob/main/Project10/Images/3.Opening_necessary_ports.png)
 
 2. Update /etc/hosts file for local DNS with Web Servers’ names (e.g. Web1 and Web2) and their local IP addresses
 
-![ETC:host update]()
+![ETC:host update](https://github.com/Abbysola/DevOps-Proj/blob/main/Project10/Images/4.Etc%3Ahost_update_with_webservers.png)
 
 3. Install and configure Nginx as a load balancer to point traffic to the resolvable DNS names of the webservers
 
@@ -56,8 +56,9 @@ server {
       proxy_pass http://myproject;
     }
   }
+```
 
-![Editing_nginx_file]()
+![Editing_nginx_file](https://github.com/Abbysola/DevOps-Proj/blob/main/Project10/Images/5.Editing_nginx_config_file.png)
 
 3. Comment out the line below in the code
 #       include /etc/nginx/sites-enabled/*;
@@ -69,7 +70,7 @@ sudo systemctl restart nginx
 sudo systemctl status nginx
 ```
 
-![Nginx_status]()
+![Nginx_status](https://github.com/Abbysola/DevOps-Proj/blob/main/Project10/Images/5.Nginx_status.png)
 
 
 ### Register a New Domain Name and Configure Secured Connection using SSL/TLS Certificates.
@@ -82,22 +83,22 @@ Click Allocate new address in the Elastic IPs page.
 
 Then, click Allocate in the next page.
 
-![Associate_elastic_IP]()
+![Associate_elastic_IP](https://github.com/Abbysola/DevOps-Proj/blob/main/Project10/Images/6.Associate_elastic_IP.png)
 
 Right-click the row of the newly created elastic IP, and click Associate address.
-![Associate_elastic_IP2]()
+![Associate_elastic_IP2](https://github.com/Abbysola/DevOps-Proj/blob/main/Project10/Images/7.Associate_elastic_IP2.png)
 
 Choose the EC2 instance you are integrating.
 
-![Associate_elastic_IP3]()
+![Associate_elastic_IP3](https://github.com/Abbysola/DevOps-Proj/blob/main/Project10/Images/8.Associate_elastic_IP3.png)
 
-![Associate_elastic_IP4]()
+![Associate_elastic_IP4](https://github.com/Abbysola/DevOps-Proj/blob/main/Project10/Images/9.Associate_elastic_IP4.png)
 
-![Associate_elastic_IP5]()
+![Associate_elastic_IP5](https://github.com/Abbysola/DevOps-Proj/blob/main/Project10/Images/10.Associate_elastic_IP4.png)
 
-![Elastic_IP_associated]()
+![Elastic_IP_associated](https://github.com/Abbysola/DevOps-Proj/blob/main/Project10/Images/11.Elastic_IP_associated.png)
 
-![Elastic_IP_associated2]()
+![Elastic_IP_associated2](https://github.com/Abbysola/DevOps-Proj/blob/main/Project10/Images/12.Elastic_IP_associated2.png)
 
 Note that elastic IP is the solution to having a static IP address that does not change after reboot.
 
@@ -105,40 +106,42 @@ Note that elastic IP is the solution to having a static IP address that does not
 
 4. Update your nginx.conf with server_name www.<your-domain-name.com> instead of server_name www.domain.com
 
-![Updating_the_conf]()
+![Updating_the_conf](https://github.com/Abbysola/DevOps-Proj/blob/main/Project10/Images/13.Updating_the_conf.png)
 
 5. Create a record on Route 53 for the domain name
 
-![NS_Update1]()
+![NS_Update1](https://github.com/Abbysola/DevOps-Proj/blob/main/Project10/Images/14.NS_Update.png)
 
-![NS_Update2]()
+![NS_Update2](https://github.com/Abbysola/DevOps-Proj/blob/main/Project10/Images/15.NS_Update2.png)
 
-![NS_Update3]()
+![NS_Update3](https://github.com/Abbysola/DevOps-Proj/blob/main/Project10/Images/17.NS_Update3.png)
 
-![NS_Update4]()
+![NS_Update4](https://github.com/Abbysola/DevOps-Proj/blob/main/Project10/Images/18.NS_Update4.png)
 
-![NS_Update5]()
+![NS_Update5](https://github.com/Abbysola/DevOps-Proj/blob/main/Project10/Images/19.NS_Update5.png)
 
-![NS_Update6]()
+![NS_Update6](https://github.com/Abbysola/DevOps-Proj/blob/main/Project10/Images/20.NS_Update6.png)
 
-![NS_Update7]()
+![NS_Update7](https://github.com/Abbysola/DevOps-Proj/blob/main/Project10/Images/21.NS_Update7.png)
 
-![NS_Update8]()
+![NS_Update8](https://github.com/Abbysola/DevOps-Proj/blob/main/Project10/Images/22.NS_Update8.png)
 
-![NS_Update9]()
+![NS_Update9](https://github.com/Abbysola/DevOps-Proj/blob/main/Project10/Images/23.NS_Update9.png)
 
-![NS_Update10]()
+![NS_Update10](https://github.com/Abbysola/DevOps-Proj/blob/main/Project10/Images/24.NS_Update10.png)
+
+![NS_Update11](https://github.com/Abbysola/DevOps-Proj/blob/main/Project10/Images/25.NS_Update11.png)
 
 6. Check that your Web Server can be reached from your browser using new domain name using HTTP protocol – http://<your-domain-name.com>
 
-![Domain_name_reachable]()
+![Domain_name_reachable](https://github.com/Abbysola/DevOps-Proj/blob/main/Project10/Images/26.developerabby.com.ng_success.png)
 
 7. Install certbot and request for an SSL/TLS certificate
 Make sure snapd service is active and running
 
 ```sudo systemctl status snapd```
 
-![Snapd_status]()
+![Snapd_status](https://github.com/Abbysola/DevOps-Proj/blob/main/Project10/Images/27.Snapd_status.png)
 
 Install certbot
 
@@ -150,25 +153,25 @@ Request your certificate (just follow the certbot instructions – you will need
 
 sudo certbot --nginx -d <domain-name> -d <domain-name>
 
-![Creating_certificate]()
+![Creating_certificate](https://github.com/Abbysola/DevOps-Proj/blob/main/Project10/Images/28.Creating_certificate.png)
 
 Test secured access to your Web Solution by trying to reach https://<your-domain-name.com>
 
-![Testing_domain_name_with_https]()
+![Testing_domain_name_with_https](https://github.com/Abbysola/DevOps-Proj/blob/main/Project10/Images/29.Testing_domain_with_https.png)
 
 We can now access our website by using HTTPS protocol (that uses TCP port 443) and a padlock pictogram will be present in the browser’s search string.
 
-![Chacking_certificate1]()
+![Checking_certificate1](https://github.com/Abbysola/DevOps-Proj/blob/main/Project10/Images/30.Checking_certificate1.png)
 
-![Checking_certificate2]()
+![Checking_certificate2](https://github.com/Abbysola/DevOps-Proj/blob/main/Project10/Images/31.Checking_certificate2.png)
 
 Click on the padlock icon and you can see the details of the certificate issued for your website.     
 
-![Checking_certificate3]()
+![Checking_certificate3](https://github.com/Abbysola/DevOps-Proj/blob/main/Project10/Images/32.Checking_certificate3.png)
 
 Testing renewal command in dry-run mode
 
-![Testing_renewal]()
+![Testing_renewal](https://github.com/Abbysola/DevOps-Proj/blob/main/Project10/Images/33.Testing_renew_with_dry_run.png)
 
 ```sudo certbot renew --dry-run```
 
@@ -182,6 +185,6 @@ Add following line:
 
 * */12 * * *   root /usr/bin/certbot renew > /dev/null 2>&1
 
-![Scheduling_cron_job]()
+![Scheduling_cron_job](https://github.com/Abbysola/DevOps-Proj/blob/main/Project10/Images/34.Scheduling_cron_job.png)
 
 To change the interval, the schedule expression can be adjusted.
